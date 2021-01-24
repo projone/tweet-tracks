@@ -12,8 +12,14 @@
     --peach: #EDE580;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     background: radial-gradient(circle farthest-side, var(--green), var(--medGreen), var(--darkGreen));
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: Helvetica, Arial, sans-serif;
     color: white;
 }
@@ -67,8 +73,10 @@ li {
 
 footer {
     background: radial-gradient(circle at bottom left, var(--lightGreen), var(--green));
+    width: 100%;
     position: fixed;
     bottom: 0px;
+    padding: 10px;
 }
 
 .btn {
