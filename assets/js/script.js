@@ -28,9 +28,6 @@ function getLocation() {
 
 
 // function to search and return songs from musixmatch api
-
-
-// api call to music service to find media for returned songs
 function findSong(searchTerm) {
     fetch(
         'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating'
@@ -47,6 +44,9 @@ function findSong(searchTerm) {
         return result
     });
 };
+                                             
+// api call to music service (YouTube or Spotify) to find media for returned songs
+
 
 // save playlist to local storage
 var savePlaylist = function() {
