@@ -1,8 +1,15 @@
 // declare global variables
-
+var playlist = [];
 
 // get 'playlist' from localStorage if available 
-
+var loadPlaylist = function(){
+    var data = window.localStorage.getItem('playlist');
+    if (data){
+        playList = JSON.parse(data);
+    } else if (!data) {
+        playlist = [];
+    }
+};
 
 // get user location with navigator.geolocation.getCurrentPosition()
 function getLocation() {
@@ -41,8 +48,21 @@ function findSong(searchTerm) {
     });
 };
 
-
-// save result to local storage
-
+// save playlist to local storage
+var savePlaylist = function() {
+    window.localStorage.setItem('playlist', JSON.stringify(playlist));
+}
+    
+// save item to playlist & update localStorage
+var ResultToPlaylist = function(trend, mediaLink) {
+    var date = moment();
+    var entry = {
+        'date': date.format('dd/mm/yyyy'),
+        'trend': trend,
+        'link': mediaLink
+    };
+    playlist.push(entry);
+    savePlaylist();
+}
 
 // event listeners
