@@ -5,7 +5,14 @@
 
 
 // get user location with navigator.geolocation.getCurrentPosition()
-
+function getLocation() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        var coords = [lat, lng];
+        return coords;
+    }
+};
 
 // twitter authentication and retrieval of trending topics
 
