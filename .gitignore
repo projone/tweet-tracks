@@ -1,6 +1,10 @@
 #.DS_Store
 .DS_Store
 
+song-search.html
+song-search.js
+
+
 # Logs
 logs
 *.log

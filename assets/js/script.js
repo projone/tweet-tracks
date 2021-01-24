@@ -1,8 +1,15 @@
 // declare global variables
-
+var playlist = [];
 
 // get 'playlist' from localStorage if available 
-
+var loadPlaylist = function(){
+    var data = window.localStorage.getItem('playlist');
+    if (data){
+        playList = JSON.parse(data);
+    } else if (!data) {
+        playlist = [];
+    }
+};
 
 // get user location with navigator.geolocation.getCurrentPosition()
 function getLocation() {
@@ -21,9 +28,6 @@ function getLocation() {
 
 
 // function to search and return songs from musixmatch api
-
-
-// api call to music service to find media for returned songs
 function findSong(searchTerm) {
     fetch(
         'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating'
@@ -40,9 +44,25 @@ function findSong(searchTerm) {
         return result
     });
 };
+                                             
+// api call to music service (YouTube or Spotify) to find media for returned songs
 
 
-// save result to local storage
-
+// save playlist to local storage
+var savePlaylist = function() {
+    window.localStorage.setItem('playlist', JSON.stringify(playlist));
+}
+    
+// save item to playlist & update localStorage
+var ResultToPlaylist = function(trend, mediaLink) {
+    var date = moment();
+    var entry = {
+        'date': date.format('dd/mm/yyyy'),
+        'trend': trend,
+        'link': mediaLink
+    };
+    playlist.push(entry);
+    savePlaylist();
+}
 
 // event listeners
