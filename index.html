@@ -4,61 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tweet Tracks</title>
-         <link rel="icon" href="https://tse1.mm.bing.net/th?id=OIP.FCKMemzqNplY37Jwi0Yk3AHaGl&pid=Api&rs=1&c=1&qlt=95&w=136&h=120" type="image/x-icon">
-        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css"
-            integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+        <link rel="icon" href="https://tse1.mm.bing.net/th?id=OIP.FCKMemzqNplY37Jwi0Yk3AHaGl&pid=Api&rs=1&c=1&qlt=95&w=136&h=120" type="image/x-icon">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/base-min.css">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/grids-min.css">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/grids-responsive-min.css">
         <link rel="stylesheet" href="./assets/css/style.css" />
     </head>
 <body>
     
     <header>
         <h1>Tweet Tracks</h1>
-        <h2>Today's Soundtrack</h2>
+        <h2>Soundtrack your day</h2>
     </header>
 
-    <main class="pure-g"></main>
+    <main class="pure-g">
     
-    <section class="pure-u-1-3">
+    <section class="pure-u-1 pure-u-md-1-4">
         <div>
-            <h3 class="section-header">Trending Today</h3>
+            <h3 class="section-header">Trending Today <span id="date">24/01/21</span></h3>
+            <div class="section-content">
             <div id="trending">
                 <ul>
-                    <li>#apples</li>
-                    <li>#bananas</li>
-                    <li>#carrots</li>
-                    <li>d</li>
-                    <li>e</li>
+                    <li class="list-item">#apples</li>
+                    <li class="list-item">#bananas</li>
+                    <li class="list-item">#carrots</li>
+                    <li class="list-item">#doughnuts</li>
+                    <li class="list-item">#eggs</li>
                 </ul>
             </div>
                 
             <form>
                 <label for="search-term">Search Trend</label>
                 <input type="text" id="search-term" name="search-term"><br><br>
-                <button class="pure-button" type="submit">Search</button>
+                <button class="btn" type="submit">Search</button>
             </form>
                 
             </div>
+            </div>
     </section>
 
-    <section class="pure-u-1-2">
+    <section class="pure-u-1 pure-u-md-1-4">
 
         <h3 class="section-header">Your Song</h3>
     
-    <div id="songs">
+    <div class="section-content" id="songs">
         
         <div id="youtube-video">
-            <p id="date">22/01/21</p>
             <p id="searched-trend">searched trend</p>
             <a href="https://www.youtube.com/watch?v=8gNjgMznL3M">youtube link video</a>
         </div>
         
-        <button class="pure-button" id="add-to-playlist">Add To Playlist</button>
+        <button class="btn" id="add-to-playlist">Add To Playlist</button>
         
-        <button class="pure-button" id="view-playlist">View Saved Playlist</button>
-        
-        <div id="playlist"></div>
-        </div>
+        <button class="btn" id="view-playlist">View Saved Playlist</button>
     
+        </div>
+
+    </section>
+
+    <section class="pure-u-1 pure-u-md-1-3">
+        <h3 class="section-header">Your Playlist</h3>
+        <div class="section-content" id="playlist">
+            <ul>
+                <li>stuff</li>
+                <li>stuff</li>
+                <li>stuff</li>
+                <li>stuff</li>
+            </ul>
+        </div>
     </section>
     
 </main>
@@ -66,13 +79,23 @@
     <footer>
         <h3>About Us</h3>
         <div>
-            <p>content made by group 9 </p>
-            <a href=""></a>   <!-- our github link between inverted commas -->
-            <p></p>
+            <p>Group 9</p>
+            <a href=""></a>   <!-- our github link -->
+            <ul>
+                <li><a href="">Shawn Evans</a></li>
+                <li><a href="">Mohammed Yusuf Javid</a></li>
+                <li><a href="">Richard Lim</a></li>
+                <li><a href="">Zoha Mumtaz</a></li>
+                <li><a href="">Amelia Wasowski</a></li>
+                <li><a href="">Jason Yau</a></li>
+            </ul>
+                
         </div>
     </footer>
 
-        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+    integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+    crossorigin="anonymous"></script>
 <script src="./assets/js/script.js"></script>
 </body>
     

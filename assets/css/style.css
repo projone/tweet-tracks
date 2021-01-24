@@ -1,26 +1,105 @@
 * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --lightGreen: #1D7874;
+    --green:  #0E3C44;
+    --medGreen: #0A2D33;
+    --darkGreen: #071E22;
+    --peach: #EDE580;
+}
+
 body {
-    background: radial-gradient(circle farthest-side, #ebf4ff, #d6e9ff, #c2deff);
+    background: radial-gradient(circle farthest-side, var(--green), var(--medGreen), var(--darkGreen));
     font-family: Helvetica, Arial, sans-serif;
+    color: white;
+}
+
+header {
+    padding: 20px;
+    background: radial-gradient(circle at bottom left, var(--lightGreen), var(--green));
+}
+
+h1 {
+    margin: 0;
+    font-size: 3em;
+}
+
+h2 {
+    margin: 0;
+    font-size: 2em;
+    font-style: italic;
 }
 
 section {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     margin: 25px;
 }
 
 .section-header {
     border-radius: 10px 10px 0 0;
-    background-color: #c2deff;
+    background-color: var(--lightGreen);
     padding: 10px;
 }
 
 li {
     list-style-type: none;
+    transition: all ease-in-out 0.2s;
+}
+
+.list-item {
+    color: white;
+    font-size: 1.5em;
+}
+
+.list-item:hover {
+    color: var(--peach);
+    cursor: pointer;
+}
+
+.section-content {
+    padding: 10px;
+}
+
+footer {
+    background: radial-gradient(circle at bottom left, var(--lightGreen), var(--green));
+    position: fixed;
+    bottom: 0px;
+}
+
+.btn {
+    padding: 10px 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    border: none;
+    background-color: var(--peach);
+    color: black;
+    text-transform: uppercase;
+    font-size: smaller;
+}
+
+.btn:hover {
+    background-color: white;
+    color: black;
+    transform: translateY(2px);
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+}
+
+.d-none {
+    display: none;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--peach);
+    transition: all ease-in-out 0.2s;
 }
