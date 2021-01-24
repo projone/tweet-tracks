@@ -1,0 +1,26 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(circle farthest-side, #ebf4ff, #d6e9ff, #c2deff);
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+section {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    margin: 25px;
+}
+
+.section-header {
+    border-radius: 10px 10px 0 0;
+    background-color: #c2deff;
+    padding: 10px;
+}
+
+li {
+    list-style-type: none;
+}
