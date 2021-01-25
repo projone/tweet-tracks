@@ -1,105 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tweet Tracks</title>
-        <link rel="icon" href="https://tse1.mm.bing.net/th?id=OIP.FCKMemzqNplY37Jwi0Yk3AHaGl&pid=Api&rs=1&c=1&qlt=95&w=136&h=120" type="image/x-icon">
-        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/base-min.css">
-        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/grids-min.css">
-        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/grids-responsive-min.css">
-        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/menus-min.css">
-        <!-- <link rel="stylesheet"
+    <link rel="icon"
+        href="https://tse1.mm.bing.net/th?id=OIP.FCKMemzqNplY37Jwi0Yk3AHaGl&pid=Api&rs=1&c=1&qlt=95&w=136&h=120"
+        type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/base-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/grids-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/grids-responsive-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/menus-min.css">
+    <!-- <link rel="stylesheet"
             href="//cdn.jsdelivr.net/combine/npm/purecss@2.0.3/build/base-min.css,npm/purecss@2.0.3/build/grids-min.css,npm/purecss@2.0.4/build/grids-responsive-min.css,npm/purecss@2.0.3/build/menus-min.css" /> -->
-        <link rel="stylesheet" href="./assets/css/style.css" />
-    </head>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
 <body>
-    
-    <header>
-        <h1>Tweet Tracks</h1>
-        <h2>Soundtrack your day</h2>
-    </header>
+    <div class="pure-g">
 
-    <main class="pure-g">
-    
-    <section class="pure-u-1 pure-u-md-1-4">
-        <div>
-            <h3 class="section-header">Trending Today <span id="date">24/01/21</span></h3>
-            <div class="section-content">
-            <div id="trending">
-                <ul>
-                    <li class="list-item">#apples</li>
-                    <li class="list-item">#bananas</li>
-                    <li class="list-item">#carrots</li>
-                    <li class="list-item">#doughnuts</li>
-                    <li class="list-item">#eggs</li>
-                </ul>
+        <div class="pure-u-1 pure-u-lg-1-5 sidebar flex-column justify-between">
+            <div class="l-box">
+
+            <header class="flex-row mb-1">
+                <div>
+                <h1>Tweet Tracks</h1>
+                <h2>Soundtrack your day</h2>
+                </div>
+                <ol class="mt-1">
+                    <!-- will revise this wording -->
+                    <li>See what's trending in your area</li>
+                    <li>Click a trending topic to get a song</li>
+                    <li>Add songs to your playlist</li>
+                </ol>
+            </header>
+
+            <section class="section-white mb-1">
+                <div>
+                    <h3 class="section-header">Trending Today <span id="date">24/01/21</span></h3>
+                    <div class="section-content">
+                        <div id="trending">
+                            <ul>
+                                <li class="list-item tag-list">#apples</li>
+                                <li class="list-item tag-list">#bananas</li>
+                                <li class="list-item tag-list">#carrots</li>
+                                <li class="list-item tag-list">#doughnuts</li>
+                                <li class="list-item tag-list">#eggs</li>
+                            </ul>
+                        </div>
+
+                        <!-- not sure if we are including a manual search but leaving this here for now -->
+                        <div class="flex-row align-center m-5">
+                            <label class="m-5" for="search-term">Search</label>
+                            <input class="m-5" type="text" id="search-term" name="search-term"><br><br>
+                            <button class="btn m-5 shadow-light" type="submit">Search</button>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- this will be collapsible -->
+            <!-- and go to the bottom on small screens-->
+            <footer class="section-black mb-1">
+                <h3 class="section-header">About Us // <a class="a-dark" href="">Group 9</a></h3> <!-- our github link -->
+                <div class="pure-menu section-content">
+                    <ul class="">
+                        <!-- link to everyone's github accounts -->
+                        <li class="pure-menu-item list-item"><a class="a-light" href="">Shawn Evans</a></li>
+                        <li class="pure-menu-item list-item"><a class="a-light" href="">Mohammed Yusuf Javid</a></li>
+                        <li class="pure-menu-item list-item"><a class="a-light" href="">Richard Lim</a></li>
+                        <li class="pure-menu-item list-item"><a class="a-light" href="">Zoha Mumtaz</a></li>
+                        <li class="pure-menu-item list-item"><a class="a-light" href="">Amelia Wasowski</a></li>
+                        <li class="pure-menu-item list-item"><a class="a-light" href="">Jason Yau</a></li>
+                    </ul>
+
+                </div>
+            </footer>
+
+        </div>
+        </div>
+
+
+        <main class="pure-u-1 pure-u-lg-4-5">
+            <div class="l-box">
+                <section class="pure-u-1 pure-u-lg-2-5 section-black mb-1">
+
+                    <h3 class="section-header">#<span id="searched-trend">someHashtag</span></h3>
+
+                    <div class="section-content" id="songs">
+
+                        <div id="youtube-video">
+                            <a class="a-light" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">youtube video</a>
+                        </div>
+
+                        <div class="flex-row m-10">
+                            <button class="btn m-5 shadow-dark" id="add-to-playlist">Add To Playlist</button>
+
+                            <button class="btn m-5 shadow-dark" id="view-playlist">View Saved Playlist</button>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <section class="pure-u-1 pure-u-lg-2-5 section-black">
+                    <h3 class="section-header">Your Playlist</h3>
+                    <div class="section-content" id="playlist">
+                        <ul>
+                            <li class="list-item playlist-item">some</li>
+                            <li class="list-item playlist-item">BODY</li>
+                            <li class="list-item playlist-item">once</li>
+                            <li class="list-item playlist-item">told</li>
+                            <li class="list-item playlist-item">me</li>
+                        </ul>
+                    </div>
+                </section>
             </div>
-                
-            <form>
-                <label for="search-term">Search Trend</label>
-                <input type="text" id="search-term" name="search-term"><br><br>
-                <button class="btn" type="submit">Search</button>
-            </form>
-                
-            </div>
-            </div>
-    </section>
 
-    <section class="pure-u-1 pure-u-md-1-4">
+        </main>
+    </div>
 
-        <h3 class="section-header">#<span id="searched-trend">someHashtag</span></h3>
-    
-    <div class="section-content" id="songs">
-        
-        <div id="youtube-video">
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">youtube video</a>
-        </div>
-        
-        <button class="btn" id="add-to-playlist">Add To Playlist</button>
-        
-        <button class="btn" id="view-playlist">View Saved Playlist</button>
-    
-        </div>
-
-    </section>
-
-    <section class="pure-u-1 pure-u-md-1-3">
-        <h3 class="section-header">Your Playlist</h3>
-        <div class="section-content" id="playlist">
-            <ul>
-                <li>♪ some</li>
-                <li>♪ body</li>
-                <li>♪ once</li>
-                <li>♪ told</li>
-                <li>♪ me</li>
-            </ul>
-        </div>
-    </section>
-    
-</main>
-
-    <footer>
-        <h3>About Us</h3>
-        <div class="pure-menu pure-menu-horizontal">
-            <ul>
-                <li class="pure-menu-item"><a href="">Group 9</a></li> <!-- our github link -->
-                <li class="pure-menu-item"><a href="">Shawn Evans</a></li> <!-- link to everyone's github accounts -->
-                <li class="pure-menu-item"><a href="">Mohammed Yusuf Javid</a></li>
-                <li class="pure-menu-item"><a href="">Richard Lim</a></li>
-                <li class="pure-menu-item"><a href="">Zoha Mumtaz</a></li>
-                <li class="pure-menu-item"><a href="">Amelia Wasowski</a></li>
-                <li class="pure-menu-item"><a href="">Jason Yau</a></li>
-            </ul>
-                
-        </div>
-    </footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
-    integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
-    crossorigin="anonymous"></script>
-<script src="./assets/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
-    
-</html>
 
+</html>
