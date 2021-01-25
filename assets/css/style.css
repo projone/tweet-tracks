@@ -55,6 +55,13 @@ h3 {
     font-size: 1em;
 }
 
+.logo {
+    height: 75px;
+    width: 75px;
+    display: inline;
+    float: left;
+}
+
 section {
     /*background: radial-gradient(circle farthest-side, var(--green), var(--medGreen), var(--darkGreen));
     background-repeat: no-repeat;
@@ -196,4 +203,12 @@ a:hover {
 
 .mb-1 {
     margin-bottom: 1em;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-content: center;
 }
