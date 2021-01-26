@@ -41,13 +41,20 @@
 
             <section class="section-white mb-1">
                 <div class="section-header">
-                    <h3>Select Your City</h3>
+                    <h3>Select Your Location</h3>
                 </div>
                 <div class="section-content">
                     <div class="flex-row justify-center align-center m-5">
+                        <div>
+                        <label class="d-none" for="country">Select your country</label>
+                        <select class="m-5" name="country" id="country"></select>
+                        <button class="btn m-5 shadow-light" type="submit">Go</button>
+                        </div>
+                        <div>
                         <label class="d-none" for="city">Select your city</label>
                         <select class="m-5" name="city" id="city"></select>
-                        <button class="btn m-5 shadow-light" type="submit">Search</button>
+                        <button class="btn m-5 shadow-light" type="submit">Go</button>
+                        </div>
                     </div>
 
                 </div>
@@ -104,11 +111,10 @@
 
                     <div class="section-content" id="songs">
 
-                        <div id="youtube-video">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/uQ_DHRI-Xp0" frameborder="0"
+                        <div id="youtube-video" class="flex-row justify-center">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen></iframe>
-                            <a class="a-light" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">youtube video</a>
                         </div>
 
                         <div class="flex-row m-10">
