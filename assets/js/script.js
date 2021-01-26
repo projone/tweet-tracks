@@ -13,7 +13,7 @@ var loadPlaylist = function(){
 };
 
 // get user location with navigator.geolocation.getCurrentPosition()
-function getLocation() {
+/* function getLocation() {
     navigator.geolocation.getCurrentPosition(function(position) {
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
@@ -21,12 +21,13 @@ function getLocation() {
         return coords;
     });
 };
+*/
 
 // retrieval of trending twitter topics
-var trendList = [];
 
 var getTrends = function(city, country){
     $.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + country + '/'+ city +'/', function(response) {  
+        trendList = [];
         for (var i = 1; i < 11; i++) {
             var trend = $(response).find('#trend-list > div:nth-child(1) > ol > li:nth-child(' + i +') > a').text();
             console.log(trend);
