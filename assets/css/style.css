@@ -12,16 +12,9 @@
     --lightBg2: #EBEBEB;
     --accent1: #CAE5FF;
     --accent2: #BDEEC1;
-    /*
-    --accent1: #ffd166;
-    --accent2: #f0f66e;
-    */
 }
 
 body {
-    /*background: radial-gradient(circle farthest-side, var(--green), var(--medGreen), var(--darkGreen));
-    background-repeat: no-repeat;
-    background-size: cover;*/
     background: radial-gradient(circle farthest-side, var(--darkBg1), var(--darkBg2)); 
     font-family: Helvetica, Arial, sans-serif;
     color: white;
@@ -57,10 +50,6 @@ h3 {
 }
 
 section {
-    /*background: radial-gradient(circle farthest-side, var(--green), var(--medGreen), var(--darkGreen));
-    background-repeat: no-repeat;
-    background-size: cover;*/
-    /*background: rgba(255, 255, 255, 0.2);*/
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     height: max-content;
@@ -78,7 +67,6 @@ section {
 .section-header {
     border-radius: 5px 5px 0 0;
     background: linear-gradient(to right, var(--accent1), var(--accent2));
-    /*background-color: var(--lightGreen);*/
     padding: 10px;
     color: #2e2e2e;
 }
