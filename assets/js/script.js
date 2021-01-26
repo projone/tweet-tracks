@@ -1,6 +1,7 @@
 // declare global variables
 var playlist = [];
 var trendList = [];
+var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
 
 // get 'playlist' from localStorage if available 
 var loadPlaylist = function(){
@@ -65,13 +66,21 @@ function findSong(searchTerm) {
         var songName = songObj.track_name;
         var artistName = songObj.artist_name;
         console.log(songName, artistName);
-        var result = songName + " " + artistName;
+        var result = songName + " by " + artistName;
+        nowPlaying.song = result
         return result
     });
 };
                                              
 // api call to music service (YouTube or Spotify) to find media for returned songs
 
+/* render YouTube video to the DOM
+var renderMedia = function(youTubeLink){
+    var mediaEl = '';
+    var ytDiv = document.querySelector('.youtube-video');
+    ytDiv.appendChild(mediaEl);
+}
+*/
 
 // save playlist to local storage
 var savePlaylist = function() {
@@ -79,18 +88,17 @@ var savePlaylist = function() {
 }
     
 // save item to playlist & update localStorage
-var ResultToPlaylist = function(trend, mediaLink) {
+var ResultToPlaylist = function() {
     var date = moment();
-    var entry = {
-        'date': date.format('dd/mm/yyyy'),
-        'trend': trend,
-        'link': mediaLink
-    };
-    playlist.push(entry);
+    nowPlaying.date = date.format('dd/mm/yyyy');
+    playlist.push(nowPlaying);
     savePlaylist();
 }
 
 // event listeners
-
-// test dom elements
-
+document.querySelector('#trending ul').addEventListener('click', function(){
+    var searchTerm = this.closest('.tag-list').textContent;
+    nowPlaying.trend = searchTerm;
+    var song = findSong(searchTerm);
+    // searchYT(song);
+});
