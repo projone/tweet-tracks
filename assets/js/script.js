@@ -1,5 +1,6 @@
 // declare global variables
 var playlist = [];
+var trendList = [];
 
 // get 'playlist' from localStorage if available 
 var loadPlaylist = function(){
@@ -18,14 +19,37 @@ function getLocation() {
         var lng = position.coords.longitude;
         var coords = [lat, lng];
         return coords;
-    }
+    });
 };
 
-// twitter authentication and retrieval of trending topics
+// retrieval of trending twitter topics
+var trendList = [];
+
+var getTrends = function(city, country){
+    $.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + country + '/'+ city +'/', function(response) {  
+        for (var i = 1; i < 11; i++) {
+            var trend = $(response).find('#trend-list > div:nth-child(1) > ol > li:nth-child(' + i +') > a').text();
+            console.log(trend);
+            trendList.push(trend)
+        };
+        console.log(trendList);
+    });
+};
+
 
 
 // render twitter trends to DOM
-
+var renderTrends = function() {
+    var trendListEl = document.querySelector('#trending ul');
+    trendListEl.innerHTML = "";
+    for (var i = 0; i < trendList.length; i++) {
+        var listItem = document.createElement('li');
+        listItem.className = 'list-item tag-list';
+        listItem.textContent = trendList[i];
+        trendListEl.appendChild(listItem);
+    };
+    console.log(trendListEl.innerHTML);
+}
 
 // function to search and return songs from musixmatch api
 function findSong(searchTerm) {
@@ -66,3 +90,6 @@ var ResultToPlaylist = function(trend, mediaLink) {
 }
 
 // event listeners
+
+// test dom elements
+
