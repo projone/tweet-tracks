@@ -86,13 +86,12 @@ function findSong(searchTerm) {
                                              
 
 //searchBtn.addEventListener("click", fetchYoutube);
-/* render YouTube video to the DOM
+//render YouTube video to the DOM
 var renderMedia = function(youTubeLink){
-    var mediaEl = '';
     var ytDiv = document.querySelector('.youtube-video');
-    ytDiv.appendChild(mediaEl);
+    ytDiv.innerHTML = ''
 }
-*/
+
 
 // save playlist to local storage
 var savePlaylist = function() {
