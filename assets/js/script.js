@@ -78,7 +78,7 @@ var getCity = function (string) {
 		}
 
 		// by default, print the searched-trend by the most popular trend
-		$("#searched-trend").text(trendList[0]);
+		$("#searched-trend").text("Top Trending Topic");
 
 	});
 }
@@ -286,7 +286,9 @@ var fetchYoutube = function(term) {
 
 /* SEARCH FOR SONGS WITH A TREND TERM */
 // function to search and return songs from musixmatch api
-function findSong(searchTerm) {
+function findSong(term) {
+    var searchTerm = parseTrends(term);
+    console.log(searchTerm);
     nowPlaying.trend = searchTerm;
     fetch(
         'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating'
@@ -302,8 +304,10 @@ function findSong(searchTerm) {
         var result = songName + " song by " + artistName;
         nowPlaying.song = result;
         console.log(result);
-        fetchYoutube(result);
-    });
+        //fetchYoutube(result);
+    }).catch(function(error) {
+        console.log("We couldn't find a song with that term in it. Please try again!");
+    });;
 };
                                              
 
