@@ -1,11 +1,8 @@
 // declare global variables
 var playlist = [];
-<<<<<<< HEAD
 var apiKey = 'AIzaSyAxnLvO9fU3ahdMfivmsavDwE4qCwhzBgE';
-=======
 var trendList = [];
 var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
->>>>>>> feature/trends
 
 // get 'playlist' from localStorage if available 
 var loadPlaylist = function(){
@@ -17,34 +14,7 @@ var loadPlaylist = function(){
     }
 };
 
-<<<<<<< HEAD
-// twitter authentication and retrieval of trending topics
-var getTrends = funciton(){
-    $.get('https://cors-anywhere.herokuapp.com/https://trends24.in/canada/toronto/', function(response) {
-        var trendList = [];
-        for (var i = 1; i < 11; i++) {
-            var trend = $(response).find('#trend-list > div:nth-child(1) > ol > li:nth-child(' + i +') > a').text();
-            console.log(trend);
-            trendList.push(trend)
-        };
-        console.log(trendList);
-    });
-}
-=======
-// get user location with navigator.geolocation.getCurrentPosition()
-/* function getLocation() {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        var coords = [lat, lng];
-        return coords;
-    });
-};
-*/
-
 // retrieval of trending twitter topics
->>>>>>> feature/trends
-
 var getTrends = function(city, country){
     $.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + country + '/'+ city +'/', function(response) {  
         trendList = [];
@@ -85,28 +55,14 @@ function findSong(searchTerm) {
         var songName = songObj.track_name;
         var artistName = songObj.artist_name;
         console.log(songName, artistName);
-<<<<<<< HEAD
-        var result = songName + " " + artistName;
-        fetchYoutube(result);
-=======
         var result = songName + " by " + artistName;
         nowPlaying.song = result
         return result
->>>>>>> feature/trends
     });
 };
                                              
 // api call to music service (YouTube or Spotify) to find media for returned songs
-// AMELIA'S API KEY
-var apiKey = 'AIzaSyAxnLvO9fU3ahdMfivmsavDwE4qCwhzBgE';
 
-<<<<<<< HEAD
-=======
-//var searchBtn = document.getElementById("search");
-//var searchTerm = document.querySelector("#searchTerm").value;
-
-
->>>>>>> feature/trends
 var fetchYoutube = function(term) {
     fetch(
         'https://www.googleapis.com/youtube/v3/search'
@@ -121,8 +77,6 @@ var fetchYoutube = function(term) {
         console.log(response);
     })
 }
-<<<<<<< HEAD
-=======
 
 //searchBtn.addEventListener("click", fetchYoutube);
 /* render YouTube video to the DOM
@@ -132,13 +86,13 @@ var renderMedia = function(youTubeLink){
     ytDiv.appendChild(mediaEl);
 }
 */
->>>>>>> feature/trends
 
 // save playlist to local storage
 var savePlaylist = function() {
     window.localStorage.setItem('playlist', JSON.stringify(playlist));
 }
-    
+
+
 // save item to playlist & update localStorage
 var ResultToPlaylist = function() {
     var date = moment();
@@ -147,10 +101,10 @@ var ResultToPlaylist = function() {
     savePlaylist();
 }
 
+
 // event listeners
 document.querySelector('#trending ul').addEventListener('click', function(){
     var searchTerm = this.closest('.tag-list').textContent;
     nowPlaying.trend = searchTerm;
     var song = findSong(searchTerm);
-    // searchYT(song);
 });
