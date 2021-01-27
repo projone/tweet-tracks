@@ -8,7 +8,8 @@ const COUNTRY = 1;
 var getCity = function (string) {
 	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in' +string, function(response) {
 		// Gets the current location name. 
-		var currentLocation = parseLocation($(response).find('#app-bar-toggle').first().text());
+		var currentLocation = $(response).find('#app-bar-toggle').first().text();
+		console.log(currentLocation);
 		// print the location name
 		$("#city-name").text(currentLocation);
 		
@@ -36,32 +37,32 @@ var getCity = function (string) {
 			createTrendListHTML(trend);
 		};
 
+		// Before print, remove previous city
+		$("#city").empty();
+		
+		// number of available locations
+		var locationLength = $(response).find('.suggested-locations__list li').length;
+		
+		$("#city").append("<option id=''>...</option>");
+		// prints the drop down list of locations
+		for (var i = 1; i <= locationLength; i++) {
+
+			// location name
+			var location = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').text();
+			
+			// location url
+			var locationUrl = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').attr('href');
+			
+			// print to HTML
+			createLocationHTML(location, locationUrl,CITY);
+		}
+
 		// by default, print the searched-trend by the most popular trend
 		$("#searched-trend").text(trendList[0]);
 
-		if (string !== "") {
-			// before print, remove previous options of location names
-			$("#city").empty();
-
-			// number of available locations
-			var locationLength = $(response).find('.suggested-locations__list li').length;
-			
-			// prints the drop down list of locations
-			for (var i = 1; i <= locationLength; i++) {
-
-				// location name
-				var location = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').text();
-				
-				// location url
-				var locationUrl = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').attr('href');
-				
-				// print to HTML
-				createLocationHTML(location, locationUrl, CITY);
-			}
-		}
-
 	});
 }
+
 
 // save to localStorage
 var saveCurrentLocation = function () {
@@ -115,7 +116,7 @@ var createCountryHTML = function () {
 			createLocationHTML(location, locationUrl,COUNTRY);
 		}
 	});
-
+	$("#city").append("<option id=''>...</option>");
 };
 
 // prints the trend list
@@ -179,30 +180,44 @@ $("#city-form").submit(function (event) {
 	event.preventDefault();
 
 	// grab the url
-	var selectedCity = $("#country option:selected").attr('id');
-	
-	// print the page with world wide trending topcis
-	if (selectedCity === "world-wide"){
-		getCity('');
-		savedUrl[0] = '';
+	var selectedCountry = $("#country option:selected").attr('id');
+	var selectedCity = $("#city option:selected").attr('id');
+
+	// check if city is selected
+	if (selectedCity === '') {
+		getCity(selectedCountry);
+		savedUrl[0] = selectedCountry;
 	} 
-	// print the page with desired location trending topics
 	else {
 		getCity(selectedCity);
 		savedUrl[0] = selectedCity;
 	}
-	// save the current location url
 	saveCurrentLocation();
+
 });
 
+
+// event handler for selecting trending topics
+$("#trending").on("click", function(event){
+
+	// prints the clicked trending topics
+	$("#searched-trend").text( event.target.id);
+});
+// dynamic changes to city droplist
 $("#country").change(function (event) {
+
+	// get the country url
 	var selectedCountryUrl = $("#country option:selected").attr('id');
 
+	// print the city droplist with the country url above
 	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + selectedCountryUrl, function(response) {
+		// remove previous city lists
 		$("#city").empty();
+		
 		// number of available locations
 		var locationLength = $(response).find('.suggested-locations__list li').length;
 		
+		$("#city").append("<option id=''>...</option>");
 		// prints the drop down list of locations
 		for (var i = 1; i <= locationLength; i++) {
 
@@ -218,13 +233,6 @@ $("#country").change(function (event) {
 	});
 });
 
-// event handler for selecting trending topics
-$("#trending").on("click", function(event){
-
-	// prints the clicked trending topics
-	$("#searched-trend").text( event.target.id);
-});
-
 
 // this function should be only called once when the website is loaded
 var pageLoad = function () {
@@ -232,6 +240,7 @@ var pageLoad = function () {
 	// loads the data from localStorage to the global array variable, 'savedUrl'
 	loadCurrentLocation();
 
+	// print the country droplist
 	createCountryHTML();
 
 	// prints the page
@@ -242,4 +251,3 @@ var pageLoad = function () {
 
 // call this function when the website is loaded
 pageLoad();
-
