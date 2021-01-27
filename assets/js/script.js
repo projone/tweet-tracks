@@ -1,5 +1,6 @@
 // declare global variables
 var playlist = [];
+var apiKey = 'AIzaSyAxnLvO9fU3ahdMfivmsavDwE4qCwhzBgE';
 
 // get 'playlist' from localStorage if available 
 var loadPlaylist = function(){
@@ -11,17 +12,18 @@ var loadPlaylist = function(){
     }
 };
 
-// get user location with navigator.geolocation.getCurrentPosition()
-function getLocation() {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        var coords = [lat, lng];
-        return coords;
-    }
-};
-
 // twitter authentication and retrieval of trending topics
+var getTrends = funciton(){
+    $.get('https://cors-anywhere.herokuapp.com/https://trends24.in/canada/toronto/', function(response) {
+        var trendList = [];
+        for (var i = 1; i < 11; i++) {
+            var trend = $(response).find('#trend-list > div:nth-child(1) > ol > li:nth-child(' + i +') > a').text();
+            console.log(trend);
+            trendList.push(trend)
+        };
+        console.log(trendList);
+    });
+}
 
 
 // render twitter trends to DOM
@@ -41,12 +43,26 @@ function findSong(searchTerm) {
         var artistName = songObj.artist_name;
         console.log(songName, artistName);
         var result = songName + " " + artistName;
-        return result
+        fetchYoutube(result);
     });
 };
                                              
 // api call to music service (YouTube or Spotify) to find media for returned songs
 
+var fetchYoutube = function(term) {
+    fetch(
+        'https://www.googleapis.com/youtube/v3/search'
+        + '?part=snippet&maxResults=25'
+        + '&q=' + term
+        + '&key=' + apiKey
+    )
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(response) {
+        console.log(response);
+    })
+}
 
 // save playlist to local storage
 var savePlaylist = function() {
