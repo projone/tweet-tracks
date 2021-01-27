@@ -1,11 +1,12 @@
 // holds the current url 
 var savedUrl=[];
 
+const CITY = 0;
+const COUNTRY = 1;
 
 // prints the page with string url
 var getCity = function (string) {
 	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in' +string, function(response) {
-
 		// Gets the current location name. 
 		var currentLocation = parseLocation($(response).find('#app-bar-toggle').first().text());
 		// print the location name
@@ -38,25 +39,27 @@ var getCity = function (string) {
 		// by default, print the searched-trend by the most popular trend
 		$("#searched-trend").text(trendList[0]);
 
-		// before print, remove previous options of location names
-		$("#city").empty();
-		$("#city").append("<option id='world-wide'>...</option>");
+		if (string !== "") {
+			// before print, remove previous options of location names
+			$("#city").empty();
 
-		// number of available locations
-		var locationLength = $(response).find('.suggested-locations__list li').length;
-
-		// prints the drop down list of locations
-		for (var i = 1; i <= locationLength; i++) {
-
-			// location name
-			var location = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').text();
+			// number of available locations
+			var locationLength = $(response).find('.suggested-locations__list li').length;
 			
-			// location url
-			var locationUrl = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').attr('href');
-			
-			// print to HTML
-			createLocationHTML(location, locationUrl);
+			// prints the drop down list of locations
+			for (var i = 1; i <= locationLength; i++) {
+
+				// location name
+				var location = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').text();
+				
+				// location url
+				var locationUrl = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').attr('href');
+				
+				// print to HTML
+				createLocationHTML(location, locationUrl, CITY);
+			}
 		}
+
 	});
 }
 
@@ -79,11 +82,40 @@ var loadCurrentLocation = function () {
 
 	// loads the saved url
 	savedUrl= saved;
-}
+};
+
 
 // prints the drop down list of locations
-var createLocationHTML = function (location, locationUrl) {
-	$("#city").append("<option id='" + locationUrl + "'>" + location + "</option>");
+var createLocationHTML = function (location, locationUrl, cityOrCountry) {
+	if (cityOrCountry === CITY) {
+		$("#city").append("<option id='" + locationUrl + "'>" + location + "</option>");
+	}
+	else {
+		$("#country").append("<option id='" + locationUrl + "'>" + location + "</option>");
+	}
+};
+
+var createCountryHTML = function () {
+	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in/', function(response) {
+		
+		$("#country").empty();
+		// number of available locations
+		var locationLength = $(response).find('.suggested-locations__list li').length;
+		
+		// prints the drop down list of locations
+		for (var i = 1; i <= locationLength; i++) {
+
+			// location name
+			var location = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').text();
+			
+			// location url
+			var locationUrl = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').attr('href');
+			
+			// print to HTML
+			createLocationHTML(location, locationUrl,COUNTRY);
+		}
+	});
+
 };
 
 // prints the trend list
@@ -147,7 +179,7 @@ $("#city-form").submit(function (event) {
 	event.preventDefault();
 
 	// grab the url
-	var selectedCity = $("#city option:selected").attr('id');
+	var selectedCity = $("#country option:selected").attr('id');
 	
 	// print the page with world wide trending topcis
 	if (selectedCity === "world-wide"){
@@ -163,6 +195,28 @@ $("#city-form").submit(function (event) {
 	saveCurrentLocation();
 });
 
+$("#country").change(function (event) {
+	var selectedCountryUrl = $("#country option:selected").attr('id');
+
+	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + selectedCountryUrl, function(response) {
+		$("#city").empty();
+		// number of available locations
+		var locationLength = $(response).find('.suggested-locations__list li').length;
+		
+		// prints the drop down list of locations
+		for (var i = 1; i <= locationLength; i++) {
+
+			// location name
+			var location = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').text();
+			
+			// location url
+			var locationUrl = $(response).find('.suggested-locations__list li:nth-child('+ i+') > a').attr('href');
+			
+			// print to HTML
+			createLocationHTML(location, locationUrl,CITY);
+		}
+	});
+});
 
 // event handler for selecting trending topics
 $("#trending").on("click", function(event){
@@ -177,6 +231,8 @@ var pageLoad = function () {
 
 	// loads the data from localStorage to the global array variable, 'savedUrl'
 	loadCurrentLocation();
+
+	createCountryHTML();
 
 	// prints the page
 	// argument: string url
