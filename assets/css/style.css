@@ -15,7 +15,7 @@
 }
 
 body {
-    background: radial-gradient(circle farthest-side, var(--darkBg1), var(--darkBg2)); 
+    background: radial-gradient(circle farthest-side, var(--darkBg1), var(--darkBg2));
     font-family: Helvetica, Arial, sans-serif;
     color: white;
 }
@@ -42,6 +42,11 @@ h2 {
 h3 {
     text-transform: uppercase;
     font-size: 1em;
+}
+
+.sidebar {
+    background: radial-gradient(circle farthest-side, #292929, #1f1f1f);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
 .logo {
@@ -104,6 +109,23 @@ ol li {
 
 footer {
     border-radius: 10px;
+    width: max-content;
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+}
+
+#expand {
+    display: none;
+}
+
+.arrow:hover {
+    cursor: pointer;
+    color: var(--lightBg1);
+}
+
+.pure-menu {
+    transition: display 1s ease-in;
 }
 
 .shadow-dark {
