@@ -23,9 +23,11 @@ var loadPlaylist = function(){
 
 // gets the city trends page with string url
 var getCity = function (string) {
-	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in' +string, function(response) {
+	
+    $.get('https://cors-anywhere.herokuapp.com/https://trends24.in' +string, function(response) {
 		// Gets the current location name. 
-		var currentLocation = $(response).find('#app-bar-toggle').first().text();
+		console.log(response);
+        var currentLocation = $(response).find('#app-bar-toggle').first().text();
 		console.log(currentLocation);
 		// print the location name
 		$("#city-name").text(currentLocation);
@@ -45,11 +47,12 @@ var getCity = function (string) {
 			
 			// parse the trend
 			parsedTrend = parseTrends(trend);
+            console.log(parsedTrend);
 			
 			// collects the trend list
 			parsedTrendList.push(parsedTrend);
 			trendList.push(trend);
-
+            console.log(trendList)
 			// print to HTML
 			createTrendListHTML(trend);
 		};
@@ -255,7 +258,7 @@ $("#country").change(function (event) {
 
 //render YouTube video to the DOM
 var renderMedia = function(youTubeId){
-    var ytDiv = document.querySelector('.youtube-video');
+    var ytDiv = document.querySelector('#youtube-video');
     ytDiv.innerHTML = '<iframe src="https://www.youtube.com/embed/' + youTubeId + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 }
 
@@ -324,12 +327,13 @@ var resultToPlaylist = function() {
 
 /* EVENT LISTENERS/HANDLERS */
 
-// event listeners <<< change to jquery!!!
+/* event listeners <<< change to jquery!!!
 document.querySelector('#trending ul').addEventListener('click', function(){
     var searchTerm = this.closest('.tag-list').textContent;
     nowPlaying.trend = searchTerm;
     var song = findSong(searchTerm);
 });
+*/
 
 
 // event handler for selecting locations
@@ -360,6 +364,8 @@ $("#trending").on("click", function(event){
 
 	// prints the clicked trending topics
 	$("#searched-trend").text( event.target.id);
+    var songTerm = event.target.id;
+    findSong(songTerm);
 });
 
 // this function should be only called once when the website is loaded

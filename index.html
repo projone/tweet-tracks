@@ -8,14 +8,11 @@
     <link rel="icon"
         href="https://tse1.mm.bing.net/th?id=OIP.FCKMemzqNplY37Jwi0Yk3AHaGl&pid=Api&rs=1&c=1&qlt=95&w=136&h=120"
         type="image/x-icon">
-    <!-- jquery -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
-    <!-- pure css -->
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/base-min.css">
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/grids-min.css">
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.4/build/grids-responsive-min.css">
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/menus-min.css">
-    <link rel="stylesheet"
+    <!-- <link rel="stylesheet"
             href="//cdn.jsdelivr.net/combine/npm/purecss@2.0.3/build/base-min.css,npm/purecss@2.0.3/build/grids-min.css,npm/purecss@2.0.4/build/grids-responsive-min.css,npm/purecss@2.0.3/build/menus-min.css" /> -->
     <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
@@ -28,7 +25,7 @@
 
             <header class="mb-1">
                 <div class="flex-row align-center">
-                    <img src="./assets/images/tweet-tracks-logo.svg" alt="Tweet Tracks Logo" class="logo"/>
+                    <!-- <img src="./assets/images/tweet-tracks-logo.svg" alt="Tweet Tracks Logo" class="logo"/> -->
                         <div>
                     <h1>Tweet Tracks</h1>
                     <h2>Soundtrack your day</h2>
@@ -47,26 +44,23 @@
                     <h3>Select Your City</h3>
                 </div>
                 <div class="section-content">
-                    <div class="flex-row justify-center align-center m-5">
+                    <form class="flex-row justify-center align-center m-5" id="city-form">
+                        <label class="d-none" for="country">Select your country</label>
+                        <select class="m-5" name="country" id="country"></select>
                         <label class="d-none" for="city">Select your city</label>
                         <select class="m-5" name="city" id="city"></select>
-                        <button class="btn m-5 shadow-light" type="submit">Search</button>
-                    </div>
+                        <button class="btn m-5 shadow-light" type="click">Search</button>
+                    </form>
 
                 </div>
             </section>
 
             <section class="section-white mb-1">
                 <div>
-                    <h3 class="section-header">Trending In <span id="city-name">Toronto</span></h3>
+                    <h3 class="section-header">Trending In <span id="city-name"></span></h3>
                     <div class="section-content">
                         <div id="trending">
-                            <ul>
-                                <li class="list-item tag-list">#apples</li>
-                                <li class="list-item tag-list">#bananas</li>
-                                <li class="list-item tag-list">#carrots</li>
-                                <li class="list-item tag-list">#doughnuts</li>
-                                <li class="list-item tag-list">#eggs</li>
+                            <ul id ="trending-ul">
                             </ul>
                         </div>
 
@@ -103,13 +97,12 @@
                 <div class="l-box">
                     <section class="section-black mb-1">
 
-                    <h3 class="section-header">#<span id="searched-trend">someHashtag</span></h3>
+                    <h3 class="section-header" id ="searched-trend"></h3>
 
                     <div class="section-content" id="songs">
 
                         <div id="youtube-video">
-
-                            <a class="a-light" href="https://www.youtube.com/watch?v=uQ_DHRI-Xp0">youtube video</a>
+                            <a class="a-light" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">youtube video</a>
                         </div>
 
                         <div class="flex-row m-10">
@@ -146,9 +139,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous"></script>
-    <!-- jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        
+    <script src=https://code.jquery.com/jquery-3.5.1.min.js></script>  
     <script src="./assets/js/script.js"></script>
 </body>
-    
+
 </html>
