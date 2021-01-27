@@ -95,7 +95,7 @@ var fetchYoutube = function(term) {
     })
 }
 
-searchBtn.addEventListener("click", fetchYoutube);
+//searchBtn.addEventListener("click", fetchYoutube);
 /* render YouTube video to the DOM
 var renderMedia = function(youTubeLink){
     var mediaEl = '';
