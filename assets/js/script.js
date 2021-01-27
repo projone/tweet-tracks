@@ -104,7 +104,7 @@ var savePlaylist = function() {
 
 
 // save item to playlist & update localStorage
-var ResultToPlaylist = function() {
+var resultToPlaylist = function() {
     var date = moment();
     nowPlaying.date = date.format('dd/mm/yyyy');
     playlist.push(nowPlaying);
