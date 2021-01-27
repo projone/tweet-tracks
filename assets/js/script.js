@@ -58,7 +58,10 @@ var fetchYoutube = function(term) {
         var youTubeId = response.items[0].id.videoId;
         var youTubeBaseUrl = 'https://www.youtube.com/watch?v='
         var result = youTubeBaseUrl + youTubeId;
+        nowPlaying.link = result;
         console.log(result);
+        renderMedia(youTubeId);
+        
     })
 }
 
@@ -66,6 +69,7 @@ var fetchYoutube = function(term) {
 
 // function to search and return songs from musixmatch api
 function findSong(searchTerm) {
+    nowPlaying.trend = searchTerm;
     fetch(
         'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating'
     ).then(function(response) {
@@ -78,7 +82,7 @@ function findSong(searchTerm) {
         var artistName = songObj.artist_name;
         console.log(songName, artistName);
         var result = songName + " song by " + artistName;
-        nowPlaying.song = result
+        nowPlaying.song = result;
         console.log(result);
         fetchYoutube(result);
     });
@@ -87,9 +91,9 @@ function findSong(searchTerm) {
 
 //searchBtn.addEventListener("click", fetchYoutube);
 //render YouTube video to the DOM
-var renderMedia = function(youTubeLink){
+var renderMedia = function(youTubeId){
     var ytDiv = document.querySelector('.youtube-video');
-    ytDiv.innerHTML = ''
+    ytDiv.innerHTML = '<iframe src="https://www.youtube.com/embed/' + youTubeId + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 }
 
 
