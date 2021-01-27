@@ -42,25 +42,6 @@ var renderTrends = function() {
     console.log(trendListEl.innerHTML);
 }
 
-// function to search and return songs from musixmatch api
-function findSong(searchTerm) {
-    fetch(
-        'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating'
-    ).then(function(response) {
-        return response.json();
-    })
-    .then(function(response) {
-        // returns the first track in an array of tracks '[0]'
-        var songObj = response.message.body.track_list[0].track; 
-        var songName = songObj.track_name;
-        var artistName = songObj.artist_name;
-        console.log(songName, artistName);
-        var result = songName + " by " + artistName;
-        nowPlaying.song = result
-        return result
-    });
-};
-                                             
 // api call to music service (YouTube or Spotify) to find media for returned songs
 
 var fetchYoutube = function(term) {
@@ -74,9 +55,35 @@ var fetchYoutube = function(term) {
         return response.json();
     })
     .then(function(response) {
-        console.log(response);
+        var youTubeId = response.items[0].id.videoId;
+        var youTubeBaseUrl = 'https://www.youtube.com/watch?v='
+        var result = youTubeBaseUrl + youTubeId;
+        console.log(result);
     })
 }
+
+
+
+// function to search and return songs from musixmatch api
+function findSong(searchTerm) {
+    fetch(
+        'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating'
+    ).then(function(response) {
+        return response.json();
+    })
+    .then(function(response) {
+        // returns the first track in an array of tracks '[0]'
+        var songObj = response.message.body.track_list[0].track; 
+        var songName = songObj.track_name;
+        var artistName = songObj.artist_name;
+        console.log(songName, artistName);
+        var result = songName + " song by " + artistName;
+        nowPlaying.song = result
+        console.log(result);
+        fetchYoutube(result);
+    });
+};
+                                             
 
 //searchBtn.addEventListener("click", fetchYoutube);
 /* render YouTube video to the DOM
