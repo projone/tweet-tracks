@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,37 +42,33 @@
 
             <section class="section-white">
                 <div class="section-header">
-                    <h3>Select Your Location</h3>
+                    <h3>Select Your City</h3>
                 </div>
                 <div class="section-content">
-                    <div class="flex-row justify-center align-center m-5">
+                    <form class="flex-row justify-center align-center m-5" id="city-form">
                         <label class="d-none" for="country">Select your country</label>
                         <select class="m-5" name="country" id="country"></select>
                         <label class="d-none" for="city">Select your city</label>
                         <select class="m-5" name="city" id="city"></select>
-                        <button class="btn m-5 shadow-light" type="submit" id="select-location">Go</button>
-                    </div>
+                        <button class="btn m-5 shadow-light" type="click">Search</button>
+                    </form>
 
                 </div>
             </section>
 
-        </div>
-        </div>
+            <section class="section-white mb-1">
+                <div>
+                    <h3 class="section-header">Trending In <span id="city-name"></span></h3>
+                    <div class="section-content">
+                        <div id="trending">
+                            <ul id ="trending-ul">
+                            </ul>
+                        </div>
 
-        <div class="pure-u-1 pure-u-md-1-3 pure-u-xl-1-5">
-            <div class="l-box">
-        <section class="section-white mb-1">
-            <div>
-                <h3 class="section-header">Trending In <span id="city-name">Toronto</span></h3>
-                <div class="section-content">
-                    <div id="trending">
-                        <ul>
-                            <li class="list-item tag-list">#apples</li>
-                            <li class="list-item tag-list">#bananasjlhjklhjkhjklhjlhjklhjhjlhljk</li>
-                            <li class="list-item tag-list">#carrots</li>
-                            <li class="list-item tag-list">#doughnuts</li>
-                            <li class="list-item tag-list">#eggs</li>
-                        </ul>
+                        <!-- not sure if we are including a manual search but leaving this here for now -->
+                        
+                        
+
                     </div>
         
                 </div>
@@ -80,18 +77,15 @@
         </div>
         </div>
 
-            <div class="pure-u-1 pure-u-md-1-3 pure-u-xl-2-5">
+            <div class="pure-u-1 pure-u-md-1-3 pure-u-lg-2-5">
                 <div class="l-box">
                     <section class="section-black mb-1">
 
-                    <h3 class="section-header">#<span id="searched-trend">someHashtag</span></h3>
+                    <h3 class="section-header" id ="searched-trend"></h3>
 
                     <div class="section-content" id="songs">
 
-                        <div id="youtube-video" class="flex-row justify-center">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/Mh4f9AYRCZY" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
+                        <div id="youtube-video">
                         </div>
 
                         <div class="flex-row m-10">
@@ -105,7 +99,7 @@
 
                 </div>
 
-                <div class="pure-u-1 pure-u-md-1-3 pure-u-xl-2-5">
+                <div class="pure-u-1 pure-u-md-1-3 pure-u-lg-2-5">
                     <div class="l-box">
 
                 <section class="section-black">
@@ -154,6 +148,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous"></script>
+        
+    <script src=https://code.jquery.com/jquery-3.5.1.min.js></script>  
     <script src="./assets/js/script.js"></script>
     <script>
         var aboutUs = document.querySelector(".about-us");
@@ -183,5 +179,4 @@
 
     </script>
 </body>
-
 </html>
