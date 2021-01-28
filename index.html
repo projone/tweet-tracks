@@ -67,7 +67,7 @@
                     <div id="trending">
                         <ul>
                             <li class="list-item tag-list">#apples</li>
-                            <li class="list-item tag-list">#bananas</li>
+                            <li class="list-item tag-list">#bananasjlhjklhjkhjklhjlhjklhjhjlhljk</li>
                             <li class="list-item tag-list">#carrots</li>
                             <li class="list-item tag-list">#doughnuts</li>
                             <li class="list-item tag-list">#eggs</li>
@@ -127,10 +127,12 @@
 
     <!-- this will be collapsible -->
     <!-- and go to the bottom on small screens-->
-    <footer class="section-black ml-1">
-        <h3 class="section-header"><input type="checkbox" id="expand"><label for="expand"><span class="arrow">▼</span></label> About Us // <a class="a-dark" href="https://github.com/projone" target="_blank">Group 9</a></h3> <!-- our github link -->
-        <div class="pure-menu section-content d-none">
-            <ul class="">
+    <footer class="section-black">
+        <h3 class="section-header"><span class="arrow" id="expand">▼</span> About Us // <a class="a-dark" href="https://github.com/projone" target="_blank">Group 9</a></h3> <!-- our github link -->
+        <!-- <label for="expand"></label>
+        <input type="checkbox" id="expand" class="d-none"> -->
+        <div class="about-us">
+            <ul class="p-10">
                 <!-- link to everyone's github accounts -->
                 <li class="pure-menu-item list-item"><a class="a-light" href="https://github.com/bluesatyr"
                         target="_blank">Shawn Evans</a></li>
@@ -154,19 +156,31 @@
         crossorigin="anonymous"></script>
     <script src="./assets/js/script.js"></script>
     <script>
-        var aboutUs = document.querySelector(".pure-menu");
+        var aboutUs = document.querySelector(".about-us");
         var expandBtn = document.querySelector("#expand");
         var arrowBtn = document.querySelector(".arrow");
         expandBtn.addEventListener("click", function () {
-            aboutUs.classList.toggle("d-none");
             if (arrowBtn.textContent === "▼") {
                 arrowBtn.textContent = "▶";
             }
             else {
                 arrowBtn.textContent = "▼"
             }
-
+            if (aboutUs.style.maxHeight) {
+                aboutUs.style.maxHeight = null;
+            } else {
+                aboutUs.style.maxHeight = aboutUs.scrollHeight + "px";
+            } 
         })
+
+        var iframeEl = document.querySelector("#songs");
+        iframeEl.addEventListener("click", function(event) {
+            console.log("clicked video!")
+            var sectionHeaderEl = iframeEl.previousElementSibling;
+            console.log(sectionHeaderEl);
+            sectionHeaderEl.classList.toggle("animate");
+        })
+
     </script>
 </body>
 

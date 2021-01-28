@@ -19,7 +19,7 @@ function getLocation() {
         var coords = [lat, lng];
         return coords;
     }
-};
+    )};
 
 // twitter authentication and retrieval of trending topics
 

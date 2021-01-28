@@ -80,6 +80,24 @@ section {
     padding: 10px;
 }
 
+.animate {
+	background: linear-gradient(to right, var(--accent1), var(--accent2));
+	background-size: 200% 200%;
+	animation: gradient 3s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 ol li {
     list-style-position: inside;
 }
@@ -92,7 +110,8 @@ ol li {
     color: var(--darkBg1);
     font-size: 1.5em;
     font-weight: bold;
-    width: max-content;
+    max-width: max-content;
+    word-break: break-all;
 }
 
 .tag-list:hover {
@@ -115,17 +134,15 @@ footer {
     right: 1em;
 }
 
-#expand {
-    display: none;
-}
-
 .arrow:hover {
     cursor: pointer;
     color: var(--lightBg1);
 }
 
-.pure-menu {
-    transition: display 1s ease-in;
+.about-us {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s ease-in;
 }
 
 .shadow-dark {
@@ -215,4 +232,8 @@ a:hover {
 
 .align-center {
     align-content: center;
+}
+
+.p-10 {
+    padding: 10px;
 }
