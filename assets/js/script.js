@@ -266,15 +266,13 @@ var renderMedia = function(youTubeId){
 var fetchYoutube = function(term) {
     fetch(
         'https://www.googleapis.com/youtube/v3/search'
-        + '?part=snippet&maxResults=25'
-		+ '&q=' + term
-		+ 'videoCategoryID=10'
-		+ '&key=' + apiKeys
+		+ '?part=snippet&id=10&maxResults=25'
+        + '&q=' + term
+        + '&key=' + apiKey
     )
     .then(function(response) {
         return response.json();
-	})
-	
+    })
     .then(function(response) {
         var youTubeId = response.items[0].id.videoId;
         var youTubeBaseUrl = 'https://www.youtube.com/watch?v='
