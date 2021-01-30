@@ -1,6 +1,6 @@
 /* GLOBAL VARIABLES */
 // holds the current url 
-// cors anywhere: https://cors-anywhere.herokuapp.com/
+// original cors anywhere url: https://cors-anywhere.herokuapp.com/
 var savedUrl=[];
 var playlist = [];
 var apiKey = 'AIzaSyAxnLvO9fU3ahdMfivmsavDwE4qCwhzBgE';
