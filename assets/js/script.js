@@ -267,7 +267,7 @@ var fetchYoutube = function(term) {
         'https://www.googleapis.com/youtube/v3/search'
         + '?part=snippet&maxResults=25'
         + '&q=' + term
-        + '&key=' + apiKey
+        + '%20-karaoke&key=' + apiKey
     )
     .then(function(response) {
         return response.json();
@@ -309,8 +309,8 @@ function findSong(term) {
             };    
         };
         
-    }).catch(function(error) { // REPLACE with a modal!!!
-        console.log("We couldn't find a song with that term in it. Please try again!");
+    }).catch(function(error) { 
+        $('#youtube-video').html("<p>We couldn't find a song with that term in it. Please try again!</p>");
     });;
 };
                                              
