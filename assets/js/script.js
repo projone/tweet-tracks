@@ -1,5 +1,6 @@
 /* GLOBAL VARIABLES */
 // holds the current url 
+// cors anywhere: https://cors-anywhere.herokuapp.com/
 var savedUrl=[];
 var playlist = [];
 var apiKey = 'AIzaSyAxnLvO9fU3ahdMfivmsavDwE4qCwhzBgE';
@@ -16,7 +17,7 @@ const COUNTRY = 1;
 // gets the city trends page with string url
 var getCity = function (string) {
 	
-    $.get('https://cors-anywhere.herokuapp.com/https://trends24.in' +string, function(response) {
+    $.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in' +string, function(response) {
 		// Gets the current location name. 
 		//console.log(response);
         var currentLocation = $(response).find('#app-bar-toggle').first().text();
@@ -164,7 +165,7 @@ var createLocationHTML = function (location, locationUrl, cityOrCountry) {
 };
  
 var createCountryHTML = function () {
-	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in/', function(response) {
+	$.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in/', function(response) {
 		
 		$("#country").empty();
 		// number of available locations
@@ -193,7 +194,7 @@ $("#country").change(function (event) {
 	var selectedCountryUrl = $("#country option:selected").attr('id');
 
 	// print the city droplist with the country url above
-	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + selectedCountryUrl, function(response) {
+	$.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in/' + selectedCountryUrl, function(response) {
 		// remove previous city lists
 		$("#city").empty();
 		
@@ -235,6 +236,7 @@ var resultToPlaylist = function() {
     nowPlaying.date = date.format('DD/MM/YYYY');
     playlist.push(nowPlaying);
     savePlaylist();
+    renderPlaylist(playlist);
 }
 
 // save playlist to local storage
@@ -287,7 +289,7 @@ function findSong(term) {
     var searchTerm = parseTrends(term);
     nowPlaying.trend = searchTerm;
     fetch(
-        'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating&s_artist_rating'
+        'https://boiling-cove-20762.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating&s_artist_rating'
     ).then(function(response) {
         return response.json();
     })
@@ -297,7 +299,9 @@ function findSong(term) {
                 var songObj = response.message.body.track_list[i].track; 
                 var songName = songObj.track_name;
                 var artistName = songObj.artist_name;
-                var result = songName + " song by " + artistName;
+                var formatted = songName + " song by " + artistName;
+                var result = formatted.replace(/Karaoke/g, "");
+                console.log(result);
                 nowPlaying.song = result;
                 console.log(result);
                 fetchYoutube(result);
@@ -355,6 +359,7 @@ $('#add-to-playlist').on("click", resultToPlaylist);
 
 // View Playlist event listener
 $("#view-playlist").on("click", function() {
+    loadPlaylist();
     renderPlaylist(playlist);
 });
 
