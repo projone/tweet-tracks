@@ -8,15 +8,7 @@ var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
 const CITY = 0;
 const COUNTRY = 1;
 
-// get 'playlist' from localStorage if available 
-var loadPlaylist = function(){
-    var data = window.localStorage.getItem('playlist');
-    if (data){
-        playList = JSON.parse(data);
-    } else if (!data) {
-        playlist = [];
-    }
-};
+
 
 
 /* GET TRENDS FROM TRENDS24.IN  */
@@ -254,6 +246,41 @@ $("#country").change(function (event) {
 	});
 });
 
+
+/* PLAYLIST MANAGEMENT */
+
+// get 'playlist' from localStorage if available 
+var loadPlaylist = function(){
+    var data = window.localStorage.getItem('playlist');
+    if (data){
+        playlist = JSON.parse(data);
+    } else if (!data) {
+        playlist = [];
+    }
+};
+
+// save item to playlist & update localStorage
+var resultToPlaylist = function() {
+    var date = moment();
+    nowPlaying.date = date.format('DD/MM/YYYY');
+    playlist.push(nowPlaying);
+    savePlaylist();
+}
+
+// save playlist to local storage
+var savePlaylist = function() {
+    window.localStorage.setItem('playlist', JSON.stringify(playlist));
+}
+
+//render playlist
+var renderPlaylist = function(playlist) {
+    $("#playlist-ul").html("");
+    for (var i = 0; i < playlist.length; i++) {
+        $("#playlist-ul").append( "<li class='list-item playlist-item'><a href='" + playlist[i].link + "'>" + playlist[i].song + "</a></li>");
+    };
+};
+
+
 /* YOUTUBE SEARCH API & RENDER TO DOM */
 
 //render YouTube video to the DOM
@@ -262,7 +289,7 @@ var renderMedia = function(youTubeId){
     ytDiv.innerHTML = '<iframe src="https://www.youtube.com/embed/' + youTubeId + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 }
 
-// api call to music service (YouTube or Spotify) to find media for returned songs
+// api call to YouTube to find media for returned songs
 var fetchYoutube = function(term) {
     fetch(
         'https://www.googleapis.com/youtube/v3/search'
@@ -281,31 +308,37 @@ var fetchYoutube = function(term) {
         console.log(result);
         renderMedia(youTubeId);
         
-    })
-}
+    });
+};
 
 /* SEARCH FOR SONGS WITH A TREND TERM */
 // function to search and return songs from musixmatch api
+
 function findSong(term) {
     var searchTerm = parseTrends(term);
     console.log(searchTerm);
     nowPlaying.trend = searchTerm;
     fetch(
-        'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating'
+        'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating&s_artist_rating'
     ).then(function(response) {
         return response.json();
     })
     .then(function(response) {
-        // returns the first track in an array of tracks '[0]'
-        var songObj = response.message.body.track_list[0].track; 
-        var songName = songObj.track_name;
-        var artistName = songObj.artist_name;
-        console.log(songName, artistName);
-        var result = songName + " song by " + artistName;
-        nowPlaying.song = result;
-        console.log(result);
-        //fetchYoutube(result);
-    }).catch(function(error) {
+        for (var i = 0; i < 10; i++){
+            if (response.message.body.track_list[i].track.explicit === 0){
+                var songObj = response.message.body.track_list[i].track; 
+                var songName = songObj.track_name;
+                var artistName = songObj.artist_name;
+                console.log(songName, artistName);
+                var result = songName + " song by " + artistName;
+                nowPlaying.song = result;
+                console.log(result);
+                fetchYoutube(result);
+                break;
+            };    
+        };
+        
+    }).catch(function(error) { // REPLACE with a modal!!!
         console.log("We couldn't find a song with that term in it. Please try again!");
     });;
 };
@@ -313,31 +346,8 @@ function findSong(term) {
 
 
 
-/* PLAYLIST MANAGEMENT */
-// save playlist to local storage
-var savePlaylist = function() {
-    window.localStorage.setItem('playlist', JSON.stringify(playlist));
-}
 
-
-// save item to playlist & update localStorage
-var resultToPlaylist = function() {
-    var date = moment();
-    nowPlaying.date = date.format('dd/mm/yyyy');
-    playlist.push(nowPlaying);
-    savePlaylist();
-}
-
-
-/* EVENT LISTENERS/HANDLERS */
-
-/* event listeners <<< change to jquery!!!
-document.querySelector('#trending ul').addEventListener('click', function(){
-    var searchTerm = this.closest('.tag-list').textContent;
-    nowPlaying.trend = searchTerm;
-    var song = findSong(searchTerm);
-});
-*/
+/* EVENT LISTENERS-HANDLERS */
 
 
 // event handler for selecting locations
@@ -365,11 +375,20 @@ $("#city-form").submit(function (event) {
 
 // event handler for selecting trending topics
 $("#trending").on("click", function(event){
-
-	// prints the clicked trending topics
-	$("#searched-trend").text( event.target.id);
+    // prints the clicked trending topics
+    $("#searched-trend").text( event.target.id);
+    // initiates musixmatch search
     var songTerm = event.target.id;
+    nowPlaying = { date: '' , trend: '', song: '' , link: ''};
     findSong(songTerm);
+});
+
+// event listener for 'add to playlist' button 
+$('#add-to-playlist').on("click", resultToPlaylist);
+
+// View Playlist event listener
+$("#view-playlist").on("click", function() {
+    renderPlaylist(playlist);
 });
 
 // this function should be only called once when the website is loaded
