@@ -1,5 +1,6 @@
 /* GLOBAL VARIABLES */
 // holds the current url 
+// cors anywhere: https://cors-anywhere.herokuapp.com/
 var savedUrl=[];
 var playlist = [];
 var apiKey = 'AIzaSyAxnLvO9fU3ahdMfivmsavDwE4qCwhzBgE';
@@ -8,15 +9,7 @@ var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
 const CITY = 0;
 const COUNTRY = 1;
 
-// get 'playlist' from localStorage if available 
-var loadPlaylist = function(){
-    var data = window.localStorage.getItem('playlist');
-    if (data){
-        playList = JSON.parse(data);
-    } else if (!data) {
-        playlist = [];
-    }
-};
+
 
 
 /* GET TRENDS FROM TRENDS24.IN  */
@@ -24,11 +17,11 @@ var loadPlaylist = function(){
 // gets the city trends page with string url
 var getCity = function (string) {
 	
-    $.get('https://cors-anywhere.herokuapp.com/https://trends24.in' +string, function(response) {
+    $.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in' +string, function(response) {
 		// Gets the current location name. 
-		console.log(response);
+		//console.log(response);
         var currentLocation = $(response).find('#app-bar-toggle').first().text();
-		console.log(currentLocation);
+		//console.log(currentLocation);
 		// print the location name
 		$("#city-name").text(currentLocation);
 		
@@ -47,12 +40,12 @@ var getCity = function (string) {
 			
 			// parse the trend
 			parsedTrend = parseTrends(trend);
-            console.log(parsedTrend);
+            //console.log(parsedTrend);
 			
 			// collects the trend list
 			parsedTrendList.push(parsedTrend);
 			trendList.push(trend);
-            console.log(trendList)
+            //console.log(trendList)
 			// print to HTML
 			createTrendListHTML(trend);
 		};
@@ -78,40 +71,10 @@ var getCity = function (string) {
 		}
 
 		// by default, print the searched-trend by the most popular trend
-		$("#searched-trend").text(trendList[0]);
+		$("#searched-trend").text("Top Trending Topic");
 
 	});
 }
-
-
-/* retrieval of trending twitter topics <<<  SHAWN'S CODE 
-var getTrends = function(city, country){
-    $.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + country + '/'+ city +'/', function(response) {  
-        trendList = [];
-        for (var i = 1; i < 11; i++) {
-            var trend = $(response).find('#trend-list > div:nth-child(1) > ol > li:nth-child(' + i +') > a').text();
-            console.log(trend);
-            trendList.push(trend)
-        };
-        console.log(trendList);
-    });
-};
-
-
-// render twitter trends to DOM
-var renderTrends = function() {
-    var trendListEl = document.querySelector('#trending ul');
-    trendListEl.innerHTML = "";
-    for (var i = 0; i < trendList.length; i++) {
-        var listItem = document.createElement('li');
-        listItem.className = 'list-item tag-list';
-        listItem.textContent = trendList[i];
-        trendListEl.appendChild(listItem);
-    };
-    console.log(trendListEl.innerHTML);
-}
-
-*/
 
 // prints the trend list
 var createTrendListHTML = function (string) {
@@ -202,7 +165,7 @@ var createLocationHTML = function (location, locationUrl, cityOrCountry) {
 };
  
 var createCountryHTML = function () {
-	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in/', function(response) {
+	$.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in/', function(response) {
 		
 		$("#country").empty();
 		// number of available locations
@@ -231,7 +194,7 @@ $("#country").change(function (event) {
 	var selectedCountryUrl = $("#country option:selected").attr('id');
 
 	// print the city droplist with the country url above
-	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + selectedCountryUrl, function(response) {
+	$.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in/' + selectedCountryUrl, function(response) {
 		// remove previous city lists
 		$("#city").empty();
 		
@@ -254,6 +217,42 @@ $("#country").change(function (event) {
 	});
 });
 
+
+/* PLAYLIST MANAGEMENT */
+
+// get 'playlist' from localStorage if available 
+var loadPlaylist = function(){
+    var data = window.localStorage.getItem('playlist');
+    if (data){
+        playlist = JSON.parse(data);
+    } else if (!data) {
+        playlist = [];
+    }
+};
+
+// save item to playlist & update localStorage
+var resultToPlaylist = function() {
+    var date = moment();
+    nowPlaying.date = date.format('DD/MM/YYYY');
+    playlist.push(nowPlaying);
+    savePlaylist();
+    renderPlaylist(playlist);
+}
+
+// save playlist to local storage
+var savePlaylist = function() {
+    window.localStorage.setItem('playlist', JSON.stringify(playlist));
+}
+
+//render playlist
+var renderPlaylist = function(playlist) {
+    $("#playlist-ul").html("");
+    for (var i = 0; i < playlist.length; i++) {
+        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
+    };
+};
+
+
 /* YOUTUBE SEARCH API & RENDER TO DOM */
 
 //render YouTube video to the DOM
@@ -262,13 +261,13 @@ var renderMedia = function(youTubeId){
     ytDiv.innerHTML = '<iframe src="https://www.youtube.com/embed/' + youTubeId + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 }
 
-// api call to music service (YouTube or Spotify) to find media for returned songs
+// api call to YouTube to find media for returned songs
 var fetchYoutube = function(term) {
     fetch(
         'https://www.googleapis.com/youtube/v3/search'
         + '?part=snippet&maxResults=25'
         + '&q=' + term
-        + '&key=' + apiKey
+        + '%20-karaoke&key=' + apiKey
     )
     .then(function(response) {
         return response.json();
@@ -278,62 +277,48 @@ var fetchYoutube = function(term) {
         var youTubeBaseUrl = 'https://www.youtube.com/watch?v='
         var result = youTubeBaseUrl + youTubeId;
         nowPlaying.link = result;
-        console.log(result);
         renderMedia(youTubeId);
         
-    })
-}
+    });
+};
 
 /* SEARCH FOR SONGS WITH A TREND TERM */
 // function to search and return songs from musixmatch api
-function findSong(searchTerm) {
+
+function findSong(term) {
+    var searchTerm = parseTrends(term);
     nowPlaying.trend = searchTerm;
     fetch(
-        'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating'
+        'https://boiling-cove-20762.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating&s_artist_rating'
     ).then(function(response) {
         return response.json();
     })
     .then(function(response) {
-        // returns the first track in an array of tracks '[0]'
-        var songObj = response.message.body.track_list[0].track; 
-        var songName = songObj.track_name;
-        var artistName = songObj.artist_name;
-        console.log(songName, artistName);
-        var result = songName + " song by " + artistName;
-        nowPlaying.song = result;
-        console.log(result);
-        fetchYoutube(result);
-    });
+        for (var i = 0; i < 10; i++){
+            if (response.message.body.track_list[i].track.explicit === 0){
+                var songObj = response.message.body.track_list[i].track; 
+                var songName = songObj.track_name;
+                var artistName = songObj.artist_name;
+                var formatted = songName + " song by " + artistName;
+                var result = formatted.replace(/Karaoke/g, "");
+                console.log(result);
+                nowPlaying.song = result;
+                console.log(result);
+                fetchYoutube(result);
+                break;
+            };    
+        };
+        
+    }).catch(function(error) { 
+        $('#youtube-video').html("<p>We couldn't find a song with that term in it. Please try again!</p>");
+    });;
 };
                                              
 
 
 
-/* PLAYLIST MANAGEMENT */
-// save playlist to local storage
-var savePlaylist = function() {
-    window.localStorage.setItem('playlist', JSON.stringify(playlist));
-}
 
-
-// save item to playlist & update localStorage
-var resultToPlaylist = function() {
-    var date = moment();
-    nowPlaying.date = date.format('dd/mm/yyyy');
-    playlist.push(nowPlaying);
-    savePlaylist();
-}
-
-
-/* EVENT LISTENERS/HANDLERS */
-
-/* event listeners <<< change to jquery!!!
-document.querySelector('#trending ul').addEventListener('click', function(){
-    var searchTerm = this.closest('.tag-list').textContent;
-    nowPlaying.trend = searchTerm;
-    var song = findSong(searchTerm);
-});
-*/
+/* EVENT LISTENERS-HANDLERS */
 
 
 // event handler for selecting locations
@@ -361,11 +346,21 @@ $("#city-form").submit(function (event) {
 
 // event handler for selecting trending topics
 $("#trending").on("click", function(event){
-
-	// prints the clicked trending topics
-	$("#searched-trend").text( event.target.id);
+    // prints the clicked trending topics
+    $("#searched-trend").text( event.target.id);
+    // initiates musixmatch search
     var songTerm = event.target.id;
+    nowPlaying = { date: '' , trend: '', song: '' , link: ''};
     findSong(songTerm);
+});
+
+// event listener for 'add to playlist' button 
+$('#add-to-playlist').on("click", resultToPlaylist);
+
+// View Playlist event listener
+$("#view-playlist").on("click", function() {
+    loadPlaylist();
+    renderPlaylist(playlist);
 });
 
 // this function should be only called once when the website is loaded
@@ -380,6 +375,8 @@ var pageLoad = function () {
 	// prints the page
 	// argument: string url
 	getCity(savedUrl[0]);
+    
+    $("#date").text(moment().format('LL'));
 };
 
 
