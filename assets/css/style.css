@@ -16,6 +16,7 @@
 
 body {
     background: radial-gradient(circle farthest-side, var(--darkBg1), var(--darkBg2));
+    background-size: cover;
     font-family: Helvetica, Arial, sans-serif;
     color: white;
 }
@@ -81,7 +82,7 @@ section {
 }
 
 .animate {
-	background: linear-gradient(to right, var(--accent1), var(--accent2));
+	background: linear-gradient(to right, var(--accent1), var(--accent2), var(--accent1));
 	background-size: 200% 200%;
 	animation: gradient 3s ease infinite;
 }
@@ -236,4 +237,35 @@ a:hover {
 
 .p-10 {
     padding: 10px;
+}
+
+.justify-self-end {
+    justify-self: end;
+}
+
+.align-self-center {
+    align-self: center;
+}
+
+.justify-self-center {
+    justify-self: center;
+}
+
+.loader {
+    width: 25px;
+    height: 25px;
+    margin: 0 auto;
+    border: none;
+    background: conic-gradient(from 90deg, var(--accent1), var(--accent2), var(--accent1));
+    border-radius: 50%;
+    animation: loader 1s linear infinite;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

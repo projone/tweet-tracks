@@ -8,6 +8,10 @@ var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
 const CITY = 0;
 const COUNTRY = 1;
 
+var cityLoaderEl = document.querySelector("#cityLoader");
+var trendsLoaderEl = document.querySelector("#trendsLoader");
+var videoLoaderEl = document.querySelector("#videoLoader");
+
 // get 'playlist' from localStorage if available 
 var loadPlaylist = function(){
     var data = window.localStorage.getItem('playlist');
@@ -26,7 +30,7 @@ var getCity = function (string) {
 	
     $.get('https://cors-anywhere.herokuapp.com/https://trends24.in' +string, function(response) {
 		// Gets the current location name. 
-		console.log(response);
+		//console.log(response);
         var currentLocation = $(response).find('#app-bar-toggle').first().text();
 		console.log(currentLocation);
 		// print the location name
@@ -55,7 +59,11 @@ var getCity = function (string) {
             console.log(trendList)
 			// print to HTML
 			createTrendListHTML(trend);
-		};
+        };
+
+        // toggle loader icon
+        var loaderEl = document.querySelector("#trendsLoader");
+        loaderEl.classList.add("d-none");
 
 		// Before print, remove previous city
 		$("#city").empty();
@@ -152,7 +160,7 @@ var parseTrends = function (string) {
 
 /* LOCATIONS CODE */
 // Gets the current location name. 
-var parseLocation=function(string) {
+var parseLocation = function(string) {
 	var result;
 
 	// check if the current location name has a whitespace to find out if the current location is a city
@@ -260,10 +268,15 @@ $("#country").change(function (event) {
 var renderMedia = function(youTubeId){
     var ytDiv = document.querySelector('#youtube-video');
     ytDiv.innerHTML = '<iframe src="https://www.youtube.com/embed/' + youTubeId + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    // toggle loader icon
+    videoLoaderEl.classList.add("d-none");
 }
 
 // api call to music service (YouTube or Spotify) to find media for returned songs
 var fetchYoutube = function(term) {
+    // show loader
+    videoLoaderEl.classList.remove("d-none");
+
     fetch(
         'https://www.googleapis.com/youtube/v3/search'
         + '?part=snippet&maxResults=25'
@@ -280,8 +293,8 @@ var fetchYoutube = function(term) {
         nowPlaying.link = result;
         console.log(result);
         renderMedia(youTubeId);
-        
     })
+
 }
 
 /* SEARCH FOR SONGS WITH A TREND TERM */
