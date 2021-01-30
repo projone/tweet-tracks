@@ -8,9 +8,11 @@ var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
 const CITY = 0;
 const COUNTRY = 1;
 
-var cityLoaderEl = document.querySelector("#cityLoader");
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
+var ourTeam = document.querySelector(".our-team");
+var expandBtn = document.querySelector("#expand");
+var arrowBtn = document.querySelector(".arrow");
 
 // get 'playlist' from localStorage if available 
 var loadPlaylist = function(){
@@ -27,6 +29,7 @@ var loadPlaylist = function(){
 
 // gets the city trends page with string url
 var getCity = function (string) {
+    trendsLoaderEl.classList.remove("d-none");
 	
     $.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in' +string, function(response) {
 		// Gets the current location name. 
@@ -62,16 +65,16 @@ var getCity = function (string) {
         };
 
         // toggle loader icon
-        var loaderEl = document.querySelector("#trendsLoader");
-        loaderEl.classList.add("d-none");
+        trendsLoaderEl.classList.add("d-none");
 
 		// Before print, remove previous city
 		$("#city").empty();
-		
-		// number of available locations
+        
+        // number of available locations
 		var locationLength = $(response).find('.suggested-locations__list li').length;
 		
-		$("#city").append("<option id=''>Nationwide</option>");
+        $("#city").append("<option id=''>Nationwide</option>");
+        
 		// prints the drop down list of locations
 		for (var i = 1; i <= locationLength; i++) {
 
@@ -83,7 +86,7 @@ var getCity = function (string) {
 			
 			// print to HTML
 			createLocationHTML(location, locationUrl,CITY);
-		}
+        }
 
 		// by default, print the searched-trend by the most popular trend
 		$("#searched-trend").text(trendList[0]);
@@ -380,6 +383,27 @@ $("#trending").on("click", function(event){
     var songTerm = event.target.id;
     findSong(songTerm);
 });
+
+// event listener for 'our team' section
+expandBtn.addEventListener("click", function () {
+    arrowBtn.classList.toggle("fa-caret-down");
+    arrowBtn.classList.toggle("fa-caret-right");
+    if (ourTeam.style.maxHeight) {
+        ourTeam.style.maxHeight = null;
+    } else {
+        ourTeam.style.maxHeight = ourTeam.scrollHeight + "px";
+    }
+})
+
+// event listener for iframe to toggle gradient animation
+// currently triggered by clicking the section not the iframe
+var iframeEl = document.querySelector("#songs");
+iframeEl.addEventListener("click", function (event) {
+    console.log("clicked video!")
+    var sectionHeaderEl = iframeEl.previousElementSibling;
+    console.log(sectionHeaderEl);
+    sectionHeaderEl.classList.toggle("animate");
+})
 
 // this function should be only called once when the website is loaded
 var pageLoad = function () {

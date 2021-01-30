@@ -130,9 +130,9 @@ ol li {
 footer {
     border-radius: 10px;
     width: max-content;
-    position: fixed;
-    bottom: 1em;
-    right: 1em;
+    position: absolute;
+    align-self: flex-end;
+    justify-self: flex-end;
 }
 
 .arrow:hover {
@@ -140,10 +140,10 @@ footer {
     color: var(--lightBg1);
 }
 
-.about-us {
+.our-team {
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.5s ease-in;
+    transition: max-height 0.7s ease-in;
 }
 
 .shadow-dark {
@@ -211,8 +211,16 @@ a:hover {
     justify-content: space-between;
 }
 
+.justify-center-between {
+    justify-content: center;
+}
+
 .m-10 {
     margin: 10px;
+}
+
+.m-1 {
+    margin: 1em;
 }
 
 .m-5 {
@@ -268,4 +276,10 @@ a:hover {
   100% {
     transform: rotate(360deg);
   }
+}
+
+@media screen and (min-width: 48em) {
+    .justify-center-between {
+        justify-content: space-between;
+    }
 }

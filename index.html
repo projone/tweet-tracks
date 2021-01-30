@@ -15,13 +15,13 @@
 </head>
 
 <body>
-    <div class="pure-g">
+    <div class="pure-g flex-row">
 
         <div class="pure-u-1 sidebar">
-            <div class="l-box flex-row align-center justify-between">
+            <div class="l-box flex-row align-center justify-center-between">
 
-                <header class="flex-row align-center">
-                    <div class="flex-row align-center">
+                <header class="flex-row align-center mb-1 justify-center-between">
+                    <div class="flex-row align-center mb-1">
                         <img src="./assets/images/tweet-tracks-logo.svg" alt="Tweet Tracks Logo" class="logo" />
                         <div class="ml-1">
                             <h1>Tweet Tracks</h1>
@@ -36,7 +36,7 @@
                     </ol>
                 </header>
 
-                <section class="section-white">
+                <section class="section-white mb-1">
                     <div class="section-header">
                         <h3>Select Your City</h3>
                     </div>
@@ -62,7 +62,7 @@
                     <h3 class="section-header">Trending In <span id="city-name"></span></h3>
                     <div class="section-content">
                         <div id="trending">
-                            <div class="loader" id="trendsLoader"></div>
+                            <div class="loader d-none" id="trendsLoader"></div>
                             <ul id="trending-ul">
                             </ul>
                         </div>
@@ -84,8 +84,9 @@
 
                     <div class="section-content" id="songs">
 
+                        <div class="loader d-none" id="videoLoader"></div>
+
                         <div id="youtube-video">
-                            <div class="loader d-none" id="videoLoader"></div>
                         </div>
 
                         <div class="flex-row m-10">
@@ -103,7 +104,7 @@
             <div class="l-box">
 
                 <section class="section-black">
-                    <h3 class="section-header">Your Playlist For <span id="date">24/01/21 </span><i class="far fa-calendar-alt"></i></h3>
+                    <h3 class="section-header">Your Playlist For <span id="date">24/01/21 </span></h3>
                     <div class="section-content" id="playlist">
                         <ul>
                             <li class="list-item playlist-item">some</li>
@@ -121,12 +122,12 @@
 
     <!-- this will be collapsible -->
     <!-- and go to the bottom on small screens-->
-    <footer class="section-black">
+    <footer class="section-black m-1">
         <h3 class="section-header"><i class="fas fa-caret-down arrow" id="expand"></i> Our Team // <a class="a-dark"
                 href="https://github.com/projone" target="_blank">Group 9</a></h3> <!-- our github link -->
         <!-- <label for="expand"></label>
         <input type="checkbox" id="expand" class="d-none"> -->
-        <div class="about-us">
+        <div class="our-team">
             <ul class="p-10">
                 <!-- link to everyone's github accounts -->
                 <li class="pure-menu-item list-item"><a class="a-light" href="https://github.com/bluesatyr"
@@ -152,28 +153,6 @@
 
     <script src=https://code.jquery.com/jquery-3.5.1.min.js></script>
     <script src="./assets/js/script.js"></script>
-    <script>
-        var aboutUs = document.querySelector(".about-us");
-        var expandBtn = document.querySelector("#expand");
-        var arrowBtn = document.querySelector(".arrow");
-        expandBtn.addEventListener("click", function () {
-            arrowBtn.classList.toggle("fa-caret-down");
-            arrowBtn.classList.toggle("fa-caret-right");
-            if (aboutUs.style.maxHeight) {
-                aboutUs.style.maxHeight = null;
-            } else {
-                aboutUs.style.maxHeight = aboutUs.scrollHeight + "px";
-            }
-        })
-
-        var iframeEl = document.querySelector("#songs");
-        iframeEl.addEventListener("click", function (event) {
-            console.log("clicked video!")
-            var sectionHeaderEl = iframeEl.previousElementSibling;
-            console.log(sectionHeaderEl);
-            sectionHeaderEl.classList.toggle("animate");
-        })
-    </script>
 </body>
 
 </html>
