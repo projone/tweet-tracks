@@ -28,7 +28,7 @@ var loadPlaylist = function(){
 // gets the city trends page with string url
 var getCity = function (string) {
 	
-    $.get('https://cors-anywhere.herokuapp.com/https://trends24.in' +string, function(response) {
+    $.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in' +string, function(response) {
 		// Gets the current location name. 
 		//console.log(response);
         var currentLocation = $(response).find('#app-bar-toggle').first().text();
@@ -71,7 +71,7 @@ var getCity = function (string) {
 		// number of available locations
 		var locationLength = $(response).find('.suggested-locations__list li').length;
 		
-		$("#city").append("<option id=''>...</option>");
+		$("#city").append("<option id=''>Nationwide</option>");
 		// prints the drop down list of locations
 		for (var i = 1; i <= locationLength; i++) {
 
@@ -94,7 +94,7 @@ var getCity = function (string) {
 
 /* retrieval of trending twitter topics <<<  SHAWN'S CODE 
 var getTrends = function(city, country){
-    $.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + country + '/'+ city +'/', function(response) {  
+    $.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in/' + country + '/'+ city +'/', function(response) {  
         trendList = [];
         for (var i = 1; i < 11; i++) {
             var trend = $(response).find('#trend-list > div:nth-child(1) > ol > li:nth-child(' + i +') > a').text();
@@ -210,7 +210,7 @@ var createLocationHTML = function (location, locationUrl, cityOrCountry) {
 };
  
 var createCountryHTML = function () {
-	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in/', function(response) {
+	$.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in/', function(response) {
 		
 		$("#country").empty();
 		// number of available locations
@@ -239,14 +239,14 @@ $("#country").change(function (event) {
 	var selectedCountryUrl = $("#country option:selected").attr('id');
 
 	// print the city droplist with the country url above
-	$.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + selectedCountryUrl, function(response) {
+	$.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in/' + selectedCountryUrl, function(response) {
 		// remove previous city lists
 		$("#city").empty();
 		
 		// number of available locations
 		var locationLength = $(response).find('.suggested-locations__list li').length;
 		
-		$("#city").append("<option id=''>...</option>");
+		$("#city").append("<option id=''>Nationwide</option>");
 		// prints the drop down list of locations
 		for (var i = 1; i <= locationLength; i++) {
 
@@ -302,7 +302,7 @@ var fetchYoutube = function(term) {
 function findSong(searchTerm) {
     nowPlaying.trend = searchTerm;
     fetch(
-        'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating'
+        'https://boiling-cove-20762.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating'
     ).then(function(response) {
         return response.json();
     })
