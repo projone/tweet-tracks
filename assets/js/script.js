@@ -305,7 +305,8 @@ function findSong(term) {
             };    
         };
         
-    }).catch(function(error) { // REPLACE with a modal!!!
+    }).catch(function(error) { // REPLACE with message in the DOM!!!
+        // another option is to split the string into multiple words and try each word individually until there is a match.
         console.log("We couldn't find a song with that term in it. Please try again!");
     });;
 };
