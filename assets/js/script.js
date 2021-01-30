@@ -18,9 +18,9 @@ var getCity = function (string) {
 	
     $.get('https://cors-anywhere.herokuapp.com/https://trends24.in' +string, function(response) {
 		// Gets the current location name. 
-		console.log(response);
+		//console.log(response);
         var currentLocation = $(response).find('#app-bar-toggle').first().text();
-		console.log(currentLocation);
+		//console.log(currentLocation);
 		// print the location name
 		$("#city-name").text(currentLocation);
 		
@@ -39,12 +39,12 @@ var getCity = function (string) {
 			
 			// parse the trend
 			parsedTrend = parseTrends(trend);
-            console.log(parsedTrend);
+            //console.log(parsedTrend);
 			
 			// collects the trend list
 			parsedTrendList.push(parsedTrend);
 			trendList.push(trend);
-            console.log(trendList)
+            //console.log(trendList)
 			// print to HTML
 			createTrendListHTML(trend);
 		};
@@ -74,36 +74,6 @@ var getCity = function (string) {
 
 	});
 }
-
-
-/* retrieval of trending twitter topics <<<  SHAWN'S CODE 
-var getTrends = function(city, country){
-    $.get('https://cors-anywhere.herokuapp.com/https://trends24.in/' + country + '/'+ city +'/', function(response) {  
-        trendList = [];
-        for (var i = 1; i < 11; i++) {
-            var trend = $(response).find('#trend-list > div:nth-child(1) > ol > li:nth-child(' + i +') > a').text();
-            console.log(trend);
-            trendList.push(trend)
-        };
-        console.log(trendList);
-    });
-};
-
-
-// render twitter trends to DOM
-var renderTrends = function() {
-    var trendListEl = document.querySelector('#trending ul');
-    trendListEl.innerHTML = "";
-    for (var i = 0; i < trendList.length; i++) {
-        var listItem = document.createElement('li');
-        listItem.className = 'list-item tag-list';
-        listItem.textContent = trendList[i];
-        trendListEl.appendChild(listItem);
-    };
-    console.log(trendListEl.innerHTML);
-}
-
-*/
 
 // prints the trend list
 var createTrendListHTML = function (string) {
@@ -276,7 +246,7 @@ var savePlaylist = function() {
 var renderPlaylist = function(playlist) {
     $("#playlist-ul").html("");
     for (var i = 0; i < playlist.length; i++) {
-        $("#playlist-ul").append( "<li class='list-item playlist-item'><a href='" + playlist[i].link + "'>" + playlist[i].song + "</a></li>");
+        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
     };
 };
 
@@ -305,7 +275,6 @@ var fetchYoutube = function(term) {
         var youTubeBaseUrl = 'https://www.youtube.com/watch?v='
         var result = youTubeBaseUrl + youTubeId;
         nowPlaying.link = result;
-        console.log(result);
         renderMedia(youTubeId);
         
     });
@@ -316,7 +285,6 @@ var fetchYoutube = function(term) {
 
 function findSong(term) {
     var searchTerm = parseTrends(term);
-    console.log(searchTerm);
     nowPlaying.trend = searchTerm;
     fetch(
         'https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + searchTerm + '&f_lyrics_language=en&s_track_rating&s_artist_rating'
@@ -329,7 +297,6 @@ function findSong(term) {
                 var songObj = response.message.body.track_list[i].track; 
                 var songName = songObj.track_name;
                 var artistName = songObj.artist_name;
-                console.log(songName, artistName);
                 var result = songName + " song by " + artistName;
                 nowPlaying.song = result;
                 console.log(result);
@@ -403,6 +370,8 @@ var pageLoad = function () {
 	// prints the page
 	// argument: string url
 	getCity(savedUrl[0]);
+    
+    $("#date").text(moment().format('LL'));
 };
 
 
