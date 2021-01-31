@@ -1,7 +1,7 @@
 # Tweet Tracks
 Plays a song that has a trending topic from Twitter in the lyrics.
 
-// PLEASE EDIT THIS PART 
+<!-- edit this part -->
 ## Screenshot of the webpage
 ![Alt text](./assets/images/screenshot.png?raw=true "Screenshot")
 
@@ -10,12 +10,10 @@ Plays a song that has a trending topic from Twitter in the lyrics.
 - Webscraped trends24 website to get the trending topics from Twitter.
 - Used Musixmatch API to search for a song that has the trending topic in the lyrics.
 
-// NOT SURE IF YOU WANT TO KEEP THE YOUTUBE PLAYLIST PART
+<!-- NOT SURE IF YOU WANT TO KEEP THE YOUTUBE PLAYLIST PART -->
 - Utilized Youtube API to play the song and save it to the user's Youtube playlist.
 
-
-// PLEASE EDIT THIS PART 
-// I'M NOT SURE IF YOU WANT TO USE YOUTUBE PLAYLIST
+<!-- PLEASE EDIT THIS PART  I'M NOT SURE IF YOU WANT TO USE YOUTUBE PLAYLIST -->
 ## How to Run
 [Prerequisite]
 - YouTube Developer Keys (See: https://developers.google.com/youtube/v3/getting-started) 
@@ -27,7 +25,6 @@ https://github.com/projone/tweet-tracks.git
 3. Go to js folder
 4. Go to script.js file and replace Youtube keys for yours
 ```javascript
-// Youtube Settings
 
 var apiKey = 'AIzaSyAxnLvO9fU3ahdMfivmsavDwE4qCwhzBgE';
 
