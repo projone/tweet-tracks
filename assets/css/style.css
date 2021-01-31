@@ -12,6 +12,10 @@
     --lightBg2: #EBEBEB;
     --accent1: #CAE5FF;
     --accent2: #BDEEC1;
+    /* --darkAccent: #8ebd95; */
+    /* --darkAccent: #ed6a5a; */
+    /* --darkAccent: #d1ac00; */
+    --darkAccent:#4584bf;
 }
 
 body {
@@ -36,7 +40,7 @@ h1 {
 
 h2 {
     margin: 0;
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-style: italic;
 }
 
@@ -45,9 +49,14 @@ h3 {
     font-size: 1em;
 }
 
-.sidebar {
+.topbar {
     background: radial-gradient(circle farthest-side, #292929, #1f1f1f);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.divider {
+    height: 2em;
+    width: 100%;
+    background: linear-gradient(to right, var(--accent1), var(--accent2));
 }
 
 .logo {
@@ -103,7 +112,7 @@ ol li {
     list-style-position: inside;
 }
 
-.list-item {
+ul li {
     list-style-type: none;
 }
 
@@ -123,27 +132,33 @@ ol li {
     cursor: pointer;
 }
 
-.playlist-item::before {
-    content: "♪ ";
+.opacity-0 {
+    opacity: 0;
+}
+
+.appear {
+    transition: all ease-in 0.3s;
+}
+
+#expand:hover > .appear {
+    opacity: 100%;
+}
+
+.appear::before {
+    content: "/ ";
 }
 
 footer {
-    border-radius: 10px;
-    width: max-content;
-    position: absolute;
-    align-self: flex-end;
-    justify-self: flex-end;
+    background: linear-gradient(to right, var(--accent1), var(--accent2));
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    color: var(--darkBg2)
 }
 
 .arrow:hover {
     cursor: pointer;
-    color: var(--lightBg1);
-}
-
-.our-team {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.7s ease-in;
+    color: var(--darkAccent);
 }
 
 .shadow-dark {
@@ -178,20 +193,46 @@ footer {
 
 a {
     text-decoration: none;
+    color: var(--darkBg2);
 }
 
-a:hover {
-    color: var(--accent1);
+.a-light:hover, .a-dark:hover {
+    color: var(--darkAccent);
     transition: all ease-in-out 0.2s;
 }
 
 .a-dark {
-    color: #2e2e2e;
+    color: var(--darkBg2)
 }
 
 .a-light {
-    color: #EBEBEB;
+    color: var(--lightBg2)
 }
+
+.playlist-item {
+    border-bottom: 1px solid var(--lightBg1);
+    list-style-type: none;
+    padding: 1em;
+}
+
+.playlist-item:hover {
+    background: radial-gradient(circle farthest-side, var(--lightBg1), var(--lightBg2));
+    color: var(--darkBg2);
+}
+
+.playlist-item:hover a {
+    color: var(--darkAccent);
+}
+
+.playlist-item:last-child {
+    border-bottom: none;
+    border-radius: 0 0 5px 5px;
+}
+
+.btn-disabled {
+
+}
+
 
 .flex-row {
     display: flex;
@@ -267,6 +308,10 @@ a:hover {
     background: conic-gradient(from 90deg, var(--accent1), var(--accent2), var(--accent1));
     border-radius: 50%;
     animation: loader 1s linear infinite;
+}
+
+iframe {
+    width: 100%;
 }
 
 @keyframes loader {
