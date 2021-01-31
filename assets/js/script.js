@@ -96,7 +96,7 @@ var getCity = function (string) {
 
 // prints the trend list
 var createTrendListHTML = function (string) {
-	$("#trending-ul").append( "<li class='list-item tag-list' id='" +string + "'>" + string + "</li>");
+	$("#trending-ul").append( "<li class='tag-list' id='" +string + "'>" + string + "</li>");
 };
 
 // converts the trending topics more readable
@@ -267,7 +267,7 @@ var savePlaylist = function() {
 var renderPlaylist = function(playlist) {
     $("#playlist-ul").html("");
     for (var i = 0; i < playlist.length; i++) {
-        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='playlist-link' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
+        $("#playlist-ul").append( "<li class='playlist-item'><a class='a-light' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
     };
 };
 
@@ -378,14 +378,9 @@ $("#trending").on("click", function(event){
 });
 
 // event listener for 'our team' section
-expandBtn.addEventListener("click", function () {
-    arrowBtn.classList.toggle("fa-caret-down");
-    arrowBtn.classList.toggle("fa-caret-right");
-    if (ourTeam.style.maxHeight) {
-        ourTeam.style.maxHeight = null;
-    } else {
-        ourTeam.style.maxHeight = ourTeam.scrollHeight + "px";
-    }
+// click event for mobile 
+$("#expand").on("click", function () {
+    $(".appear").toggleClass("opacity-0");
 })
 
 // event listener for iframe to toggle gradient animation
