@@ -9,22 +9,13 @@ var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
 const CITY = 0;
 const COUNTRY = 1;
 var newCount = 0;
-
+const today = moment();
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
 var ourTeam = document.querySelector(".our-team");
 var expandBtn = document.querySelector("#expand");
 var arrowBtn = document.querySelector(".arrow");
 
-// get 'playlist' from localStorage if available
-var loadPlaylist = function(){
-    var data = window.localStorage.getItem('playlist');
-    if (data){
-        playList = JSON.parse(data);
-    } else if (!data) {
-        playlist = [];
-    }
-};
 
 /* GET TRENDS FROM TRENDS24.IN  */
 
@@ -239,7 +230,63 @@ $("#country").change(function (event) {
 
 /* PLAYLIST MANAGEMENT */
 
-// get 'playlist' from localStorage if available 
+// get saved playlists from localStorage
+var loadSavedPlaylists =function(){
+    var data = window.localStorage.getItem('saved-playlists');
+    if (data){
+        savedPlaylists = JSON.parse(data);
+    } else if (!data) {
+        savedPlaylists = {};
+    }
+};
+
+// save item to current playlist & render to DOM
+var resultToPlaylist = function() {
+    nowPlaying.date = today.format('DD/MM/YYYY');
+    playlist.push(nowPlaying);
+    // savePlaylist();
+    renderPlaylist(playlist);
+}
+
+// add playlist to savedPlaylists and save to localStorage
+var savePlaylist = function() {
+    var date = today.format('DD/MM/YYYY');
+    savedPlaylists.date = playlist;
+    window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists));
+}
+
+var renderSavedPlaylists = function(){
+    loadSavedPlaylists();
+    // alter to render first the date, then the songs
+    // $("#playlist-ul").html("");
+    for (const [key, value] of Object.entries(savedPlaylists)) {
+        $("#playlist-ul").append( "<li class='list-item playlist-item play-date'>" + key + "</li>");
+    };
+    $(".play-date").on("click", function(){
+        var date = $(this).text();
+        renderPlaylist(savedPlaylists.date);
+    });
+};
+
+
+/* NEW SAVED PLAYLISTS CODE */
+/*
+var loadSavedPlaylists =function(){
+    var data = window.localStorage.getItem('saved-playlists');
+    if (data){
+        savedPlaylists = JSON.parse(data);
+    } else if (!data) {
+        savedPlaylists = {};
+    }
+};
+
+var saveToStorage = function(playlist){
+    var date = today.formay('yyyy-mm-dd');
+    savedPLaylists.date = playlist;
+    window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists));
+}
+
+// get 'saved-playlists' from localStorage if available 
 var loadPlaylist = function(){
     var data = window.localStorage.getItem('playlist');
     if (data){
@@ -249,25 +296,14 @@ var loadPlaylist = function(){
     }
 };
 
-// save item to playlist & update localStorage
-var resultToPlaylist = function() {
-    var date = moment();
-    nowPlaying.date = date.format('DD/MM/YYYY');
-    playlist.push(nowPlaying);
-    savePlaylist();
-    renderPlaylist(playlist);
-}
-
-// save playlist to local storage
-var savePlaylist = function() {
-    window.localStorage.setItem('playlist', JSON.stringify(playlist));
-}
-
-//render playlist
+*/
+// render playlist
 var renderPlaylist = function(playlist) {
     $("#playlist-ul").html("");
     for (var i = 0; i < playlist.length; i++) {
-        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
+        // youtube id daved as data-ytid
+        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' data-ytid='" + playlist[i].link + "'>" + playlist[i].song + "</a></li>");
+        
     };
 };
 
@@ -300,7 +336,7 @@ var fetchYoutube = function(term) {
         var youTubeId = response.items[0].id.videoId;
         var youTubeBaseUrl = 'https://www.youtube.com/watch?v='
         var result = youTubeBaseUrl + youTubeId;
-        nowPlaying.link = result;
+        nowPlaying.link = youTubeId;
         renderMedia(youTubeId);
     });
 };
@@ -388,7 +424,7 @@ $("#city-form").submit(function (event) {
 // event handler for selecting trending topics
 $("#trending").on("click", function(event){
     // prints the clicked trending topics
-    $("#searched-trend").text( event.target.id);
+    $("#searched-trend").text(event.target.id);
     // initiates musixmatch search
     var songTerm = event.target.id;
     nowPlaying = { date: '' , trend: '', song: '' , link: ''};
@@ -424,6 +460,11 @@ $("#change-song").on("click", function() {
     newSong(nowPlaying.trend);
 });
 
+// view older playlists listener
+$("get-saved").on("click", renderSavedPlaylists);
+
+
+
 // this function should be only called once when the website is loaded
 var pageLoad = function () {
 
@@ -437,7 +478,11 @@ var pageLoad = function () {
 	// argument: string url
 	getCity(savedUrl[0]);
     
+    //set today's date
     $("#date").text(moment().format('LL'));
+    
+    // load any saved playlists from localStorage
+    loadSavedPlaylists();
 };
 
 
