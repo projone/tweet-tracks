@@ -8,6 +8,7 @@ var trendList = [];
 var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
 const CITY = 0;
 const COUNTRY = 1;
+var newCount = 0;
 
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
@@ -323,6 +324,7 @@ function findSong(term) {
                 var artistName = songObj.artist_name;
                 var formatted = songName + " song by " + artistName;
                 var result = formatted.replace(/Karaoke/g, "");
+                newCount = i+1;
                 console.log(result);
                 nowPlaying.song = result;
                 console.log(result);
@@ -336,7 +338,24 @@ function findSong(term) {
     });;
 };
                                              
-
+var newSong = function(trend){
+    fetch(
+        'https://boiling-cove-20762.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + trend + '&f_lyrics_language=en&s_track_rating&s_artist_rating'
+    ).then(function(response) {
+        return response.json();
+    }).then(function(response) {
+        var songObj = response.message.body.track_list[newCount].track; 
+        var songName = songObj.track_name;
+        var artistName = songObj.artist_name;
+        var formatted = songName + " song by " + artistName;
+        var result = formatted.replace(/Karaoke/g, "");
+        console.log(result);
+        nowPlaying.song = result;
+        console.log(result);
+        newCount++;
+        fetchYoutube(result);
+    });
+};
 
 
 
@@ -400,10 +419,9 @@ iframeEl.addEventListener("click", function (event) {
 // event listener for 'add to playlist' button 
 $('#add-to-playlist').on("click", resultToPlaylist);
 
-// View Playlist event listener
-$("#view-playlist").on("click", function() {
-    loadPlaylist();
-    renderPlaylist(playlist);
+// change song event listener
+$("#change-song").on("click", function() {
+    newSong(nowPlaying.trend);
 });
 
 // this function should be only called once when the website is loaded
