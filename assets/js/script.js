@@ -11,7 +11,6 @@ const COUNTRY = 1;
 
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
-var ourTeam = document.querySelector(".our-team");
 var expandBtn = document.querySelector("#expand");
 var arrowBtn = document.querySelector(".arrow");
 
@@ -96,7 +95,7 @@ var getCity = function (string) {
 
 // prints the trend list
 var createTrendListHTML = function (string) {
-	$("#trending-ul").append( "<li class='tag-list' id='" +string + "'>" + string + "</li>");
+    $("#trending-ul").append("<li class='tag-list' id='" + string + "'>" + "<a href='#searched-trend'>" + string + "</a>" + "</li>");
 };
 
 // converts the trending topics more readable
