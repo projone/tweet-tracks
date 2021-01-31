@@ -15,7 +15,7 @@ var ourTeam = document.querySelector(".our-team");
 var expandBtn = document.querySelector("#expand");
 var arrowBtn = document.querySelector(".arrow");
 
-// get 'playlist' from localStorage if available
+// get 'playlist' from localStorage if available 
 var loadPlaylist = function(){
     var data = window.localStorage.getItem('playlist');
     if (data){
@@ -69,12 +69,12 @@ var getCity = function (string) {
 
 		// Before print, remove previous city
 		$("#city").empty();
-
+        
         // number of available locations
 		var locationLength = $(response).find('.suggested-locations__list li').length;
 		
         $("#city").append("<option id=''>Nationwide</option>");
-
+        
 		// prints the drop down list of locations
 		for (var i = 1; i <= locationLength; i++) {
 
@@ -423,10 +423,5 @@ var pageLoad = function () {
 };
 
 
-<<<<<<< HEAD
-// event listeners
- 
-=======
 // call this function when the website is loaded
 pageLoad();
->>>>>>> 66a1502bab182809fdd07231fb0f74e6fce43959
