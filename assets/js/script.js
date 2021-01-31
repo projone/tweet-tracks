@@ -11,19 +11,18 @@ const COUNTRY = 1;
 
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
-var ourTeam = document.querySelector(".our-team");
 var expandBtn = document.querySelector("#expand");
 var arrowBtn = document.querySelector(".arrow");
 
-// get 'playlist' from localStorage if available 
-var loadPlaylist = function(){
-    var data = window.localStorage.getItem('playlist');
-    if (data){
-        playList = JSON.parse(data);
-    } else if (!data) {
-        playlist = [];
-    }
-};
+// // get 'playlist' from localStorage if available 
+// var loadPlaylist = function() {
+//     var data = window.localStorage.getItem('playlist');
+//     if (data){
+//         playList = JSON.parse(data);
+//     } else if (!data) {
+//         playlist = [];
+//     }
+// };
 
 /* GET TRENDS FROM TRENDS24.IN  */
 
@@ -96,7 +95,7 @@ var getCity = function (string) {
 
 // prints the trend list
 var createTrendListHTML = function (string) {
-	$("#trending-ul").append( "<li class='list-item tag-list' id='" +string + "'>" + string + "</li>");
+    $("#trending-ul").append("<li class='tag-list'>" + "<a href='#searched-trend' id='" + string + "'>" + string + "</a>" + "</li>");
 };
 
 // converts the trending topics more readable
@@ -241,8 +240,9 @@ $("#country").change(function (event) {
 // get 'playlist' from localStorage if available 
 var loadPlaylist = function(){
     var data = window.localStorage.getItem('playlist');
-    if (data){
+    if (data) {
         playlist = JSON.parse(data);
+        renderPlaylist(playlist);
     } else if (!data) {
         playlist = [];
     }
@@ -266,7 +266,7 @@ var savePlaylist = function() {
 var renderPlaylist = function(playlist) {
     $("#playlist-ul").html("");
     for (var i = 0; i < playlist.length; i++) {
-        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
+        $("#playlist-ul").append("<li class='playlist-item'><i class='fas fa-play-circle'></i> <a class='a-light' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
     };
 };
 
@@ -365,11 +365,10 @@ $("#city-form").submit(function (event) {
 
 });
 
-
 // event handler for selecting trending topics
-$("#trending").on("click", function(event){
+$("#trending").on("click", "a", function(event){
     // prints the clicked trending topics
-    $("#searched-trend").text( event.target.id);
+    $("#searched-trend").text(event.target.id);
     // initiates musixmatch search
     var songTerm = event.target.id;
     nowPlaying = { date: '' , trend: '', song: '' , link: ''};
@@ -377,14 +376,9 @@ $("#trending").on("click", function(event){
 });
 
 // event listener for 'our team' section
-expandBtn.addEventListener("click", function () {
-    arrowBtn.classList.toggle("fa-caret-down");
-    arrowBtn.classList.toggle("fa-caret-right");
-    if (ourTeam.style.maxHeight) {
-        ourTeam.style.maxHeight = null;
-    } else {
-        ourTeam.style.maxHeight = ourTeam.scrollHeight + "px";
-    }
+// click event for mobile 
+$("#expand").on("click", function () {
+    $(".appear").toggleClass("opacity-0");
 })
 
 // event listener for iframe to toggle gradient animation
@@ -408,6 +402,8 @@ $("#view-playlist").on("click", function() {
 
 // this function should be only called once when the website is loaded
 var pageLoad = function () {
+    // load playlist
+    loadPlaylist();
 
 	// loads the data from localStorage to the global array variable, 'savedUrl'
 	loadCurrentLocation();
