@@ -179,12 +179,24 @@ footer {
     font-size: smaller;
 }
 
-.btn:hover {
-    background-color: white;
-    color: black;
+.btn-enabled {
+    border: none;
+    background-color: var(--accent1);
+    color: var(--darkBg2);
+}
+
+.btn-enabled:hover {
+    background-color: var(--lightBg2);
+    color: var(--darkBg2);
     transform: translateY(2px);
     cursor: pointer;
     transition: all ease-in-out 0.2s;
+}
+
+.btn-disabled {
+    border: 1px solid var(--lightBg2);
+    background-color: var(--darkBg2);
+    color: var(--lightBg2);
 }
 
 .d-none {
@@ -228,11 +240,6 @@ a {
     border-bottom: none;
     border-radius: 0 0 5px 5px;
 }
-
-.btn-disabled {
-
-}
-
 
 .flex-row {
     display: flex;
