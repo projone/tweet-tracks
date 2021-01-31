@@ -132,10 +132,6 @@ ul li {
     cursor: pointer;
 }
 
-.playlist-item::before {
-    content: "♪ ";
-}
-
 .opacity-0 {
     opacity: 0;
 }
@@ -164,12 +160,6 @@ footer {
     cursor: pointer;
     color: var(--darkAccent);
 }
-
-/* .our-team {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.7s ease-in;
-} */
 
 .shadow-dark {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.9);
@@ -237,6 +227,10 @@ a {
 .playlist-item:last-child {
     border-bottom: none;
     border-radius: 0 0 5px 5px;
+}
+
+.btn-disabled {
+
 }
 
 

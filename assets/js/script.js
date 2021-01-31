@@ -95,7 +95,7 @@ var getCity = function (string) {
 
 // prints the trend list
 var createTrendListHTML = function (string) {
-    $("#trending-ul").append("<li class='tag-list' id='" + string + "'>" + "<a href='#searched-trend'>" + string + "</a>" + "</li>");
+    $("#trending-ul").append("<li class='tag-list'>" + "<a href='#searched-trend' id='" + string + "'>" + string + "</a>" + "</li>");
 };
 
 // converts the trending topics more readable
@@ -266,7 +266,7 @@ var savePlaylist = function() {
 var renderPlaylist = function(playlist) {
     $("#playlist-ul").html("");
     for (var i = 0; i < playlist.length; i++) {
-        $("#playlist-ul").append( "<li class='playlist-item'><a class='a-light' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
+        $("#playlist-ul").append("<li class='playlist-item'><i class='fas fa-play-circle'></i> <a class='a-light' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
     };
 };
 
@@ -365,11 +365,10 @@ $("#city-form").submit(function (event) {
 
 });
 
-
 // event handler for selecting trending topics
-$("#trending").on("click", function(event){
+$("#trending").on("click", "a", function(event){
     // prints the clicked trending topics
-    $("#searched-trend").text( event.target.id);
+    $("#searched-trend").text(event.target.id);
     // initiates musixmatch search
     var songTerm = event.target.id;
     nowPlaying = { date: '' , trend: '', song: '' , link: ''};
