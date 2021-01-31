@@ -15,7 +15,8 @@
 }
 
 body {
-    background: radial-gradient(circle farthest-side, var(--darkBg1), var(--darkBg2)); 
+    background: radial-gradient(circle farthest-side, var(--darkBg1), var(--darkBg2));
+    background-size: cover;
     font-family: Helvetica, Arial, sans-serif;
     color: white;
 }
@@ -42,6 +43,11 @@ h2 {
 h3 {
     text-transform: uppercase;
     font-size: 1em;
+}
+
+.sidebar {
+    background: radial-gradient(circle farthest-side, #292929, #1f1f1f);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
 .logo {
@@ -75,6 +81,24 @@ section {
     padding: 10px;
 }
 
+.animate {
+	background: linear-gradient(to right, var(--accent1), var(--accent2), var(--accent1));
+	background-size: 200% 200%;
+	animation: gradient 3s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 ol li {
     list-style-position: inside;
 }
@@ -87,7 +111,8 @@ ol li {
     color: var(--darkBg1);
     font-size: 1.5em;
     font-weight: bold;
-    width: max-content;
+    max-width: max-content;
+    word-break: break-all;
 }
 
 .tag-list:hover {
@@ -104,6 +129,21 @@ ol li {
 
 footer {
     border-radius: 10px;
+    width: max-content;
+    position: absolute;
+    align-self: flex-end;
+    justify-self: flex-end;
+}
+
+.arrow:hover {
+    cursor: pointer;
+    color: var(--lightBg1);
+}
+
+.our-team {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.7s ease-in;
 }
 
 .shadow-dark {
@@ -171,8 +211,16 @@ a:hover {
     justify-content: space-between;
 }
 
+.justify-center-between {
+    justify-content: center;
+}
+
 .m-10 {
     margin: 10px;
+}
+
+.m-1 {
+    margin: 1em;
 }
 
 .m-5 {
@@ -193,4 +241,45 @@ a:hover {
 
 .align-center {
     align-content: center;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.justify-self-end {
+    justify-self: end;
+}
+
+.align-self-center {
+    align-self: center;
+}
+
+.justify-self-center {
+    justify-self: center;
+}
+
+.loader {
+    width: 25px;
+    height: 25px;
+    margin: 0 auto;
+    border: none;
+    background: conic-gradient(from 90deg, var(--accent1), var(--accent2), var(--accent1));
+    border-radius: 50%;
+    animation: loader 1s linear infinite;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (min-width: 48em) {
+    .justify-center-between {
+        justify-content: space-between;
+    }
 }

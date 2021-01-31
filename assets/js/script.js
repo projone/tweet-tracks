@@ -9,13 +9,27 @@ var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
 const CITY = 0;
 const COUNTRY = 1;
 
+var trendsLoaderEl = document.querySelector("#trendsLoader");
+var videoLoaderEl = document.querySelector("#videoLoader");
+var ourTeam = document.querySelector(".our-team");
+var expandBtn = document.querySelector("#expand");
+var arrowBtn = document.querySelector(".arrow");
 
-
+// get 'playlist' from localStorage if available 
+var loadPlaylist = function(){
+    var data = window.localStorage.getItem('playlist');
+    if (data){
+        playList = JSON.parse(data);
+    } else if (!data) {
+        playlist = [];
+    }
+};
 
 /* GET TRENDS FROM TRENDS24.IN  */
 
 // gets the city trends page with string url
 var getCity = function (string) {
+    trendsLoaderEl.classList.remove("d-none");
 	
     $.get('https://boiling-cove-20762.herokuapp.com/https://trends24.in' +string, function(response) {
 		// Gets the current location name. 
@@ -48,15 +62,19 @@ var getCity = function (string) {
             //console.log(trendList)
 			// print to HTML
 			createTrendListHTML(trend);
-		};
+        };
+
+        // toggle loader icon
+        trendsLoaderEl.classList.add("d-none");
 
 		// Before print, remove previous city
 		$("#city").empty();
-		
-		// number of available locations
+        
+        // number of available locations
 		var locationLength = $(response).find('.suggested-locations__list li').length;
 		
-		$("#city").append("<option id=''>...</option>");
+        $("#city").append("<option id=''>Nationwide</option>");
+        
 		// prints the drop down list of locations
 		for (var i = 1; i <= locationLength; i++) {
 
@@ -68,7 +86,7 @@ var getCity = function (string) {
 			
 			// print to HTML
 			createLocationHTML(location, locationUrl,CITY);
-		}
+        }
 
 		// by default, print the searched-trend by the most popular trend
 		$("#searched-trend").text("Top Trending Topic");
@@ -115,7 +133,7 @@ var parseTrends = function (string) {
 
 /* LOCATIONS CODE */
 // Gets the current location name. 
-var parseLocation=function(string) {
+var parseLocation = function(string) {
 	var result;
 
 	// check if the current location name has a whitespace to find out if the current location is a city
@@ -201,7 +219,7 @@ $("#country").change(function (event) {
 		// number of available locations
 		var locationLength = $(response).find('.suggested-locations__list li').length;
 		
-		$("#city").append("<option id=''>...</option>");
+		$("#city").append("<option id=''>Nationwide</option>");
 		// prints the drop down list of locations
 		for (var i = 1; i <= locationLength; i++) {
 
@@ -259,10 +277,15 @@ var renderPlaylist = function(playlist) {
 var renderMedia = function(youTubeId){
     var ytDiv = document.querySelector('#youtube-video');
     ytDiv.innerHTML = '<iframe src="https://www.youtube.com/embed/' + youTubeId + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    // toggle loader icon
+    videoLoaderEl.classList.add("d-none");
 }
 
 // api call to YouTube to find media for returned songs
 var fetchYoutube = function(term) {
+    // show loader
+    videoLoaderEl.classList.remove("d-none");
+
     fetch(
         'https://www.googleapis.com/youtube/v3/search'
         + '?part=snippet&maxResults=25'
@@ -278,7 +301,6 @@ var fetchYoutube = function(term) {
         var result = youTubeBaseUrl + youTubeId;
         nowPlaying.link = result;
         renderMedia(youTubeId);
-        
     });
 };
 
@@ -353,6 +375,27 @@ $("#trending").on("click", function(event){
     nowPlaying = { date: '' , trend: '', song: '' , link: ''};
     findSong(songTerm);
 });
+
+// event listener for 'our team' section
+expandBtn.addEventListener("click", function () {
+    arrowBtn.classList.toggle("fa-caret-down");
+    arrowBtn.classList.toggle("fa-caret-right");
+    if (ourTeam.style.maxHeight) {
+        ourTeam.style.maxHeight = null;
+    } else {
+        ourTeam.style.maxHeight = ourTeam.scrollHeight + "px";
+    }
+})
+
+// event listener for iframe to toggle gradient animation
+// currently triggered by clicking the section not the iframe
+var iframeEl = document.querySelector("#songs");
+iframeEl.addEventListener("click", function (event) {
+    console.log("clicked video!")
+    var sectionHeaderEl = iframeEl.previousElementSibling;
+    console.log(sectionHeaderEl);
+    sectionHeaderEl.classList.toggle("animate");
+})
 
 // event listener for 'add to playlist' button 
 $('#add-to-playlist').on("click", resultToPlaylist);
