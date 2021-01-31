@@ -12,10 +12,8 @@ var newCount = 0;
 const today = moment();
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
-var ourTeam = document.querySelector(".our-team");
 var expandBtn = document.querySelector("#expand");
 var arrowBtn = document.querySelector(".arrow");
-
 
 /* GET TRENDS FROM TRENDS24.IN  */
 
@@ -88,7 +86,7 @@ var getCity = function (string) {
 
 // prints the trend list
 var createTrendListHTML = function (string) {
-	$("#trending-ul").append( "<li class='list-item tag-list' id='" +string + "'>" + string + "</li>");
+    $("#trending-ul").append("<li class='tag-list'>" + "<a href='#searched-trend' id='" + string + "'>" + string + "</a>" + "</li>");
 };
 
 // converts the trending topics more readable
@@ -229,7 +227,6 @@ $("#country").change(function (event) {
 
 
 /* PLAYLIST MANAGEMENT */
-
 // get saved playlists from localStorage
 var loadSavedPlaylists =function(){
     var data = window.localStorage.getItem('saved-playlists');
@@ -303,7 +300,6 @@ var renderPlaylist = function(playlist) {
     for (var i = 0; i < playlist.length; i++) {
         // youtube id daved as data-ytid
         $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' data-ytid='" + playlist[i].link + "'>" + playlist[i].song + "</a></li>");
-        
     };
 };
 
@@ -420,9 +416,8 @@ $("#city-form").submit(function (event) {
 
 });
 
-
 // event handler for selecting trending topics
-$("#trending").on("click", function(event){
+$("#trending").on("click", "a", function(event){
     // prints the clicked trending topics
     $("#searched-trend").text(event.target.id);
     // initiates musixmatch search
@@ -432,14 +427,9 @@ $("#trending").on("click", function(event){
 });
 
 // event listener for 'our team' section
-expandBtn.addEventListener("click", function () {
-    arrowBtn.classList.toggle("fa-caret-down");
-    arrowBtn.classList.toggle("fa-caret-right");
-    if (ourTeam.style.maxHeight) {
-        ourTeam.style.maxHeight = null;
-    } else {
-        ourTeam.style.maxHeight = ourTeam.scrollHeight + "px";
-    }
+// click event for mobile
+$("#expand").on("click", function () {
+    $(".appear").toggleClass("opacity-0");
 })
 
 // event listener for iframe to toggle gradient animation
@@ -467,6 +457,8 @@ $("get-saved").on("click", renderSavedPlaylists);
 
 // this function should be only called once when the website is loaded
 var pageLoad = function () {
+    // load playlist
+    loadPlaylist();
 
 	// loads the data from localStorage to the global array variable, 'savedUrl'
 	loadCurrentLocation();
