@@ -15,15 +15,15 @@ var ourTeam = document.querySelector(".our-team");
 var expandBtn = document.querySelector("#expand");
 var arrowBtn = document.querySelector(".arrow");
 
-// get 'playlist' from localStorage if available 
-var loadPlaylist = function(){
-    var data = window.localStorage.getItem('playlist');
-    if (data){
-        playList = JSON.parse(data);
-    } else if (!data) {
-        playlist = [];
-    }
-};
+// // get 'playlist' from localStorage if available 
+// var loadPlaylist = function() {
+//     var data = window.localStorage.getItem('playlist');
+//     if (data){
+//         playList = JSON.parse(data);
+//     } else if (!data) {
+//         playlist = [];
+//     }
+// };
 
 /* GET TRENDS FROM TRENDS24.IN  */
 
@@ -241,8 +241,9 @@ $("#country").change(function (event) {
 // get 'playlist' from localStorage if available 
 var loadPlaylist = function(){
     var data = window.localStorage.getItem('playlist');
-    if (data){
+    if (data) {
         playlist = JSON.parse(data);
+        renderPlaylist(playlist);
     } else if (!data) {
         playlist = [];
     }
@@ -266,7 +267,7 @@ var savePlaylist = function() {
 var renderPlaylist = function(playlist) {
     $("#playlist-ul").html("");
     for (var i = 0; i < playlist.length; i++) {
-        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
+        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='playlist-link' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
     };
 };
 
@@ -408,6 +409,8 @@ $("#view-playlist").on("click", function() {
 
 // this function should be only called once when the website is loaded
 var pageLoad = function () {
+    // load playlist
+    loadPlaylist();
 
 	// loads the data from localStorage to the global array variable, 'savedUrl'
 	loadCurrentLocation();

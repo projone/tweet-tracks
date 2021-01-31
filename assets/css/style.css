@@ -186,12 +186,41 @@ a:hover {
 }
 
 .a-dark {
-    color: #2e2e2e;
+    color: var(--darkBg2)
 }
 
 .a-light {
-    color: #EBEBEB;
+    color: var(--lightBg2)
 }
+
+.playlist-item {
+    border-bottom: 1px solid var(--lightBg1);
+    list-style-type: none;
+    padding: 1em;
+}
+
+.playlist-link {
+    color: var(--lightBg2);
+}
+
+.playlist-link:hover {
+    color: var(--darkBg2)
+}
+
+.playlist-item:hover {
+    background: radial-gradient(circle farthest-side, var(--lightBg1), var(--lightBg2));
+    color: var(--darkBg2);
+}
+
+.playlist-item:hover a {
+    color: var(--darkBg2);
+}
+
+.playlist-item:last-child {
+    border-bottom: none;
+    border-radius: 0 0 5px 5px;
+}
+
 
 .flex-row {
     display: flex;
@@ -267,6 +296,10 @@ a:hover {
     background: conic-gradient(from 90deg, var(--accent1), var(--accent2), var(--accent1));
     border-radius: 50%;
     animation: loader 1s linear infinite;
+}
+
+iframe {
+    width: 100%;
 }
 
 @keyframes loader {
