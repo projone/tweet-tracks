@@ -1,5 +1,5 @@
 # Tweet Tracks
-A muscical time capsule! Plays a song that has a trending topic of the day from Twitter in the lyrics.
+A musical time capsule! Plays a song that has a trending topic of the day from Twitter in the lyrics.
 
 <!-- edit this part -->
 ## Screenshot of the webpage
