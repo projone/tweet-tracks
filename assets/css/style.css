@@ -185,7 +185,6 @@ a {
 
 .playlist-item:last-child {
     border-bottom: none;
-    border-radius: 0 0 5px 5px;
 }
 
 /* flex utilities */
@@ -239,6 +238,10 @@ a {
 
 .p-1 {
     padding: 1em;
+}
+
+.pb-1 {
+    padding-bottom: 1em;
 }
 
 .p-5 {
