@@ -1,15 +1,16 @@
 /* GLOBAL VARIABLES */
 // holds the current url 
 // original cors anywhere url: https://cors-anywhere.herokuapp.com/
+// shawn's API AIzaSyCKJtjAkL7b-95OgsumCsg-XTvHtoqppYA
 var savedUrl=[];
 var playlist = [];
-var apiKey = 'AIzaSyAxnLvO9fU3ahdMfivmsavDwE4qCwhzBgE';
+var apiKey = 'AIzaSyCPDGuiXx8MypYqldnR20-0zTfTK3l8Kkk';
 var trendList = [];
-var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
+var nowPlaying = {trend: '', song: '' , link: ''};
 const CITY = 0;
 const COUNTRY = 1;
 var newCount = 0;
-const today = moment();
+var today = moment();
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
 var expandBtn = document.querySelector("#expand");
@@ -226,83 +227,6 @@ $("#country").change(function (event) {
 });
 
 
-/* PLAYLIST MANAGEMENT */
-// get saved playlists from localStorage
-var loadSavedPlaylists =function(){
-    var data = window.localStorage.getItem('saved-playlists');
-    if (data){
-        savedPlaylists = JSON.parse(data);
-    } else if (!data) {
-        savedPlaylists = {};
-    }
-};
-
-// save item to current playlist & render to DOM
-var resultToPlaylist = function() {
-    nowPlaying.date = today.format('DD/MM/YYYY');
-    playlist.push(nowPlaying);
-    // savePlaylist();
-    renderPlaylist(playlist);
-}
-
-// add playlist to savedPlaylists and save to localStorage
-var savePlaylist = function() {
-    var date = today.format('DD/MM/YYYY');
-    savedPlaylists.date = playlist;
-    window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists));
-}
-
-var renderSavedPlaylists = function(){
-    loadSavedPlaylists();
-    // alter to render first the date, then the songs
-    // $("#playlist-ul").html("");
-    for (const [key, value] of Object.entries(savedPlaylists)) {
-        $("#playlist-ul").append( "<li class='list-item playlist-item play-date'>" + key + "</li>");
-    };
-    $(".play-date").on("click", function(){
-        var date = $(this).text();
-        renderPlaylist(savedPlaylists.date);
-    });
-};
-
-
-/* NEW SAVED PLAYLISTS CODE */
-/*
-var loadSavedPlaylists =function(){
-    var data = window.localStorage.getItem('saved-playlists');
-    if (data){
-        savedPlaylists = JSON.parse(data);
-    } else if (!data) {
-        savedPlaylists = {};
-    }
-};
-
-var saveToStorage = function(playlist){
-    var date = today.formay('yyyy-mm-dd');
-    savedPLaylists.date = playlist;
-    window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists));
-}
-
-// get 'saved-playlists' from localStorage if available 
-var loadPlaylist = function(){
-    var data = window.localStorage.getItem('playlist');
-    if (data){
-        playlist = JSON.parse(data);
-    } else if (!data) {
-        playlist = [];
-    }
-};
-
-*/
-// render playlist
-var renderPlaylist = function(playlist) {
-    $("#playlist-ul").html("");
-    for (var i = 0; i < playlist.length; i++) {
-        // youtube id daved as data-ytid
-        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' data-ytid='" + playlist[i].link + "'>" + playlist[i].song + "</a></li>");
-    };
-};
-
 
 /* YOUTUBE SEARCH API & RENDER TO DOM */
 
@@ -357,9 +281,9 @@ function findSong(term) {
                 var formatted = songName + " song by " + artistName;
                 var result = formatted.replace(/Karaoke/g, "");
                 newCount = i+1;
-                console.log(result);
+                //console.log(result);
                 nowPlaying.song = result;
-                console.log(result);
+                //console.log(result);
                 fetchYoutube(result);
                 break;
             };    
@@ -389,6 +313,68 @@ var newSong = function(trend){
     });
 };
 
+
+
+/* PLAYLIST MANAGEMENT */
+
+// get saved playlists from localStorage
+var loadSavedPlaylists =function(){
+    var data = window.localStorage.getItem('saved-playlists');
+    if (data){
+        savedPlaylists = JSON.parse(data);
+    } else if (!data) {
+        savedPlaylists = {};
+    }
+};
+
+// add playlist to savedPlaylists and save to localStorage
+var savePlaylist = function(playlist) {
+    var date = today.format('DD/MM/YYYY');
+    savedPlaylists[date] = playlist;
+    window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists));
+}
+
+// save item to current playlist & render to DOM
+var resultToPlaylist = function() {
+    playlist.push(nowPlaying);
+    savePlaylist(playlist);
+    renderPlaylist(playlist);
+}
+
+// 
+var renderSavedPlaylists = function(){
+    loadSavedPlaylists();
+    $("#playlist-ul").html("");
+    // alter to render first the date, then the songs
+    var dateKeys = Object.keys(savedPlaylists);
+    for (var i =0; i < dateKeys.length; i++) {
+        $("#playlist-ul").append( "<li class='list-item playlist-item play-date'id='"+ dateKeys[i] +"'>" + dateKeys[i] + "</li>");
+    };
+    $("#playlist-ul").on("click", "li", function(event) {
+        var date = event.target.id;
+        $('#date').text(date);
+        var datePlaylist = savedPlaylists[date];
+        renderPlaylist(datePlaylist);
+    });
+};
+
+// render playlist
+var renderPlaylist = function(playlist) {
+    $("#playlist-ul").html("");
+    for (var i = 0; i < playlist.length; i++) {
+        // youtube id daved as data-ytid
+        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' id='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
+    };
+    $("#playlist-ul").on("click", "a", function(event) {
+        var youTubeId = event.target.id;
+        renderMedia(youTubeId);
+    });
+};
+
+var clearPlaylist = function() {
+    savedPlaylists = {};
+    window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists)); 
+};
 
 
 /* EVENT LISTENERS-HANDLERS */
@@ -422,7 +408,7 @@ $("#trending").on("click", "a", function(event){
     $("#searched-trend").text(event.target.id);
     // initiates musixmatch search
     var songTerm = event.target.id;
-    nowPlaying = { date: '' , trend: '', song: '' , link: ''};
+    nowPlaying = {trend: '', song: '' , link: ''};
     findSong(songTerm);
 });
 
@@ -443,7 +429,10 @@ iframeEl.addEventListener("click", function (event) {
 })
 
 // event listener for 'add to playlist' button 
-$('#add-to-playlist').on("click", resultToPlaylist);
+$("#add-to-playlist").on("click", resultToPlaylist);
+
+// clear saved playlists
+$("#clear-playlist").on("click", clearPlaylist);
 
 // change song event listener
 $("#change-song").on("click", function() {
@@ -451,15 +440,12 @@ $("#change-song").on("click", function() {
 });
 
 // view older playlists listener
-$("get-saved").on("click", renderSavedPlaylists);
+$("#get-saved").on("click", renderSavedPlaylists);
 
 
 
 // this function should be only called once when the website is loaded
 var pageLoad = function () {
-    // load playlist
-    loadPlaylist();
-
 	// loads the data from localStorage to the global array variable, 'savedUrl'
 	loadCurrentLocation();
 
