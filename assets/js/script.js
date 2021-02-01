@@ -3,14 +3,16 @@
 // original cors anywhere url: https://cors-anywhere.herokuapp.com/
 // shawn's API AIzaSyCKJtjAkL7b-95OgsumCsg-XTvHtoqppYA
 var savedUrl=[];
+
 var playlist = [];
+var today = moment().format('DD/MM/YYYY');
+
 var apiKey = 'AIzaSyCPDGuiXx8MypYqldnR20-0zTfTK3l8Kkk';
 var trendList = [];
 var nowPlaying = {trend: '', song: '' , link: ''};
 const CITY = 0;
 const COUNTRY = 1;
 var newCount = 0;
-var today = moment();
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
 var expandBtn = document.querySelector("#expand");
@@ -319,16 +321,23 @@ var newSong = function(trend){
 // get saved playlists from localStorage
 var loadSavedPlaylists =function(){
     var data = window.localStorage.getItem('saved-playlists');
-    if (data){
+    if (data) {
         savedPlaylists = JSON.parse(data);
     } else if (!data) {
         savedPlaylists = {};
     }
+
+    if (savedPlaylists[today]) {
+        playlist = savedPlaylists[today];
+    }
+    else {
+        playlist = [];
+    }  
 };
 
 // add playlist to savedPlaylists and save to localStorage
 var savePlaylist = function(playlist) {
-    var date = today.format('DD/MM/YYYY');
+    var date = today;
     savedPlaylists[date] = playlist;
     window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists));
 }
@@ -363,7 +372,7 @@ var renderPlaylist = function(playlist) {
     $("#playlist-ul").html("");
     for (var i = 0; i < playlist.length; i++) {
         // youtube id daved as data-ytid
-        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' id='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
+        $("#playlist-ul").append("<li class='list-item playlist-item'><i class='fas fa-play-circle'></i> <a class='a-light' id='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
     };
     $("#playlist-ul").off("click");
     $("#playlist-ul").on("click", "a", function(event) {
