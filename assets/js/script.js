@@ -350,6 +350,7 @@ var renderSavedPlaylists = function(){
     for (var i =0; i < dateKeys.length; i++) {
         $("#playlist-ul").append( "<li class='list-item playlist-item play-date'id='"+ dateKeys[i] +"'>" + dateKeys[i] + "</li>");
     };
+    $("#playlist-ul").off("click");
     $("#playlist-ul").on("click", "li", function(event) {
         var date = event.target.id;
         $('#date').text(date);
@@ -365,6 +366,7 @@ var renderPlaylist = function(playlist) {
         // youtube id daved as data-ytid
         $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' id='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
     };
+    $("#playlist-ul").off("click");
     $("#playlist-ul").on("click", "a", function(event) {
         var youTubeId = event.target.id;
         renderMedia(youTubeId);
@@ -373,7 +375,9 @@ var renderPlaylist = function(playlist) {
 
 var clearPlaylist = function() {
     savedPlaylists = {};
-    window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists)); 
+    window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists));
+    renderSavedPlaylists();
+    $("#date").text(moment().format('DD/MM/YYYY'));
 };
 
 
@@ -457,7 +461,7 @@ var pageLoad = function () {
 	getCity(savedUrl[0]);
     
     //set today's date
-    $("#date").text(moment().format('LL'));
+    $("#date").text(moment().format('DD/MM/YYYY'));
     
     // load any saved playlists from localStorage
     loadSavedPlaylists();
