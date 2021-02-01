@@ -3,7 +3,7 @@ A muscical time capsule! Plays a song that has a trending topic of the day from 
 
 <!-- edit this part -->
 ## Screenshot of the webpage
-![Tweet Tracks Screenshot](./assets/images/tweet-tracks-img.png")
+![Tweet Tracks Screenshot]("./assets/images/tweet-tracks-img.png")
 
 ## Description
 - This project is a purely front-end web application that finds a list of trending topics from Twitter by user's desired location and plays a song from YouTube that has the user's choice of topic in the lyrics.
