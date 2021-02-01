@@ -1,18 +1,19 @@
 /* GLOBAL VARIABLES */
 // holds the current url 
-// cors anywhere: https://cors-anywhere.herokuapp.com/
+// original cors anywhere url: https://cors-anywhere.herokuapp.com/
+// shawn's API AIzaSyCKJtjAkL7b-95OgsumCsg-XTvHtoqppYA
 var savedUrl=[];
 var playlist = [];
-var apiKey = 'AIzaSyAxnLvO9fU3ahdMfivmsavDwE4qCwhzBgE';
+var apiKey = 'AIzaSyCPDGuiXx8MypYqldnR20-0zTfTK3l8Kkk';
 var trendList = [];
-var nowPlaying = { date: '' , trend: '', song: '' , link: ''};
+var nowPlaying = {trend: '', song: '' , link: ''};
 const CITY = 0;
 const COUNTRY = 1;
-
+var newCount = 0;
+var today = moment();
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
 var expandBtn = document.querySelector("#expand");
-
 
 /* GET TRENDS FROM TRENDS24.IN  */
 
@@ -58,12 +59,12 @@ var getCity = function (string) {
 
 		// Before print, remove previous city
 		$("#city").empty();
-        
+
         // number of available locations
 		var locationLength = $(response).find('.suggested-locations__list li').length;
 		
         $("#city").append("<option id=''>Nationwide</option>");
-        
+
 		// prints the drop down list of locations
 		for (var i = 1; i <= locationLength; i++) {
 
@@ -225,41 +226,6 @@ $("#country").change(function (event) {
 });
 
 
-/* PLAYLIST MANAGEMENT */
-
-// get 'playlist' from localStorage if available 
-var loadPlaylist = function(){
-    var data = window.localStorage.getItem('playlist');
-    if (data) {
-        playlist = JSON.parse(data);
-        renderPlaylist(playlist);
-    } else if (!data) {
-        playlist = [];
-    }
-};
-
-// save item to playlist & update localStorage
-var resultToPlaylist = function() {
-    var date = moment();
-    nowPlaying.date = date.format('DD/MM/YYYY');
-    playlist.push(nowPlaying);
-    savePlaylist();
-    renderPlaylist(playlist);
-}
-
-// save playlist to local storage
-var savePlaylist = function() {
-    window.localStorage.setItem('playlist', JSON.stringify(playlist));
-}
-
-//render playlist
-var renderPlaylist = function(playlist) {
-    $("#playlist-ul").html("");
-    for (var i = 0; i < playlist.length; i++) {
-        $("#playlist-ul").append("<li class='playlist-item'><i class='fas fa-play-circle'></i> <a class='a-light' href='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
-    };
-};
-
 
 /* YOUTUBE SEARCH API & RENDER TO DOM */
 
@@ -289,7 +255,7 @@ var fetchYoutube = function(term) {
         var youTubeId = response.items[0].id.videoId;
         var youTubeBaseUrl = 'https://www.youtube.com/watch?v='
         var result = youTubeBaseUrl + youTubeId;
-        nowPlaying.link = result;
+        nowPlaying.link = youTubeId;
         renderMedia(youTubeId);
     });
 };
@@ -313,9 +279,10 @@ function findSong(term) {
                 var artistName = songObj.artist_name;
                 var formatted = songName + " song by " + artistName;
                 var result = formatted.replace(/Karaoke/g, "");
-                console.log(result);
+                newCount = i+1;
+                //console.log(result);
                 nowPlaying.song = result;
-                console.log(result);
+                //console.log(result);
                 fetchYoutube(result);
                 break;
             };    
@@ -326,8 +293,91 @@ function findSong(term) {
     });;
 };
                                              
+var newSong = function(trend){
+    fetch(
+        'https://boiling-cove-20762.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?apikey=b25dc0cb4ca787de37dc0e3f1137fe5f&f_has_lyrics&q_lyrics=' + trend + '&f_lyrics_language=en&s_track_rating&s_artist_rating'
+    ).then(function(response) {
+        return response.json();
+    }).then(function(response) {
+        var songObj = response.message.body.track_list[newCount].track;
+        var songName = songObj.track_name;
+        var artistName = songObj.artist_name;
+        var formatted = songName + " song by " + artistName;
+        var result = formatted.replace(/Karaoke/g, "");
+        console.log(result);
+        nowPlaying.song = result;
+        console.log(result);
+        newCount++;
+        fetchYoutube(result);
+    });
+};
 
 
+
+/* PLAYLIST MANAGEMENT */
+
+// get saved playlists from localStorage
+var loadSavedPlaylists =function(){
+    var data = window.localStorage.getItem('saved-playlists');
+    if (data){
+        savedPlaylists = JSON.parse(data);
+    } else if (!data) {
+        savedPlaylists = {};
+    }
+};
+
+// add playlist to savedPlaylists and save to localStorage
+var savePlaylist = function(playlist) {
+    var date = today.format('DD/MM/YYYY');
+    savedPlaylists[date] = playlist;
+    window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists));
+}
+
+// save item to current playlist & render to DOM
+var resultToPlaylist = function() {
+    playlist.push(nowPlaying);
+    savePlaylist(playlist);
+    renderPlaylist(playlist);
+}
+
+// 
+var renderSavedPlaylists = function(){
+    loadSavedPlaylists();
+    $("#playlist-ul").html("");
+    // alter to render first the date, then the songs
+    var dateKeys = Object.keys(savedPlaylists);
+    for (var i =0; i < dateKeys.length; i++) {
+        $("#playlist-ul").append( "<li class='list-item playlist-item play-date'id='"+ dateKeys[i] +"'>" + dateKeys[i] + "</li>");
+    };
+    $("#playlist-ul").off("click");
+    $("#playlist-ul").on("click", "li", function(event) {
+        var date = event.target.id;
+        $('#date').text(date);
+        var datePlaylist = savedPlaylists[date];
+        renderPlaylist(datePlaylist);
+    });
+};
+
+// render playlist
+var renderPlaylist = function(playlist) {
+    $("#playlist-ul").html("");
+    for (var i = 0; i < playlist.length; i++) {
+        // youtube id daved as data-ytid
+        $("#playlist-ul").append( "<li class='list-item playlist-item'><a class='a-light' id='" + playlist[i].link + "' target='_blank'>" + playlist[i].song + "</a></li>");
+    };
+    $("#playlist-ul").off("click");
+    $("#playlist-ul").on("click", "a", function(event) {
+        var youTubeId = event.target.id;
+        renderMedia(youTubeId);
+    });
+};
+
+var clearPlaylist = function() {
+    savedPlaylists = {};
+    window.localStorage.setItem('saved-playlists', JSON.stringify(savedPlaylists));
+    renderSavedPlaylists();
+    $("#date").text(moment().format('DD/MM/YYYY'));
+};
 
 
 /* EVENT LISTENERS-HANDLERS */
@@ -361,30 +411,34 @@ $("#trending").on("click", "a", function(event){
     $("#searched-trend").text(event.target.id);
     // initiates musixmatch search
     var songTerm = event.target.id;
-    nowPlaying = { date: '' , trend: '', song: '' , link: ''};
+    nowPlaying = {trend: '', song: '' , link: ''};
     findSong(songTerm);
 });
 
 // event listener for 'our team' section
-// click event for mobile 
+// click event for mobile
 $("#expand").on("click", function () {
     $(".appear").toggleClass("opacity-0");
 })
 
 // event listener for 'add to playlist' button 
-$('#add-to-playlist').on("click", resultToPlaylist);
+$("#add-to-playlist").on("click", resultToPlaylist);
 
-// View Playlist event listener
-$("#view-playlist").on("click", function() {
-    loadPlaylist();
-    renderPlaylist(playlist);
+// clear saved playlists
+$("#clear-playlist").on("click", clearPlaylist);
+
+// change song event listener
+$("#change-song").on("click", function() {
+    newSong(nowPlaying.trend);
 });
+
+// view older playlists listener
+$("#get-saved").on("click", renderSavedPlaylists);
+
+
 
 // this function should be only called once when the website is loaded
 var pageLoad = function () {
-    // load playlist
-    loadPlaylist();
-
 	// loads the data from localStorage to the global array variable, 'savedUrl'
 	loadCurrentLocation();
 
@@ -395,7 +449,11 @@ var pageLoad = function () {
 	// argument: string url
 	getCity(savedUrl[0]);
     
-    $("#date").text(moment().format('LL'));
+    //set today's date
+    $("#date").text(moment().format('DD/MM/YYYY'));
+    
+    // load any saved playlists from localStorage
+    loadSavedPlaylists();
 };
 
 
