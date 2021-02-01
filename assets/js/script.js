@@ -14,7 +14,6 @@ var today = moment();
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
 var expandBtn = document.querySelector("#expand");
-var arrowBtn = document.querySelector(".arrow");
 
 /* GET TRENDS FROM TRENDS24.IN  */
 
@@ -420,16 +419,6 @@ $("#trending").on("click", "a", function(event){
 // click event for mobile
 $("#expand").on("click", function () {
     $(".appear").toggleClass("opacity-0");
-})
-
-// event listener for iframe to toggle gradient animation
-// currently triggered by clicking the section not the iframe
-var iframeEl = document.querySelector("#songs");
-iframeEl.addEventListener("click", function (event) {
-    console.log("clicked video!")
-    var sectionHeaderEl = iframeEl.previousElementSibling;
-    console.log(sectionHeaderEl);
-    sectionHeaderEl.classList.toggle("animate");
 })
 
 // event listener for 'add to playlist' button 
