@@ -3,7 +3,7 @@ A muscical time capsule! Plays a song that has a trending topic of the day from 
 
 <!-- edit this part -->
 ## Screenshot of the webpage
-![Tweet Tracks Screenshot]("./assets/images/tweet-tracks-img.png")
+![Tweet Tracks Screenshot](./assets/images/tweet-tracks-img.png)
 
 ## Description
 - This project is a purely front-end web application that finds a list of trending topics from Twitter by user's desired location and plays a song from YouTube that has the user's choice of topic in the lyrics.
@@ -13,7 +13,7 @@ A muscical time capsule! Plays a song that has a trending topic of the day from 
 - saved songs render in a playlist on the page and are saved in localStorage
 
 ## How to use
-- It's very simple to use. Under SELECT YOUR CITY box, select your choice of location, either a country or a city and click the button GO to search for trending topics.
+- Under SELECT YOUR CITY box, select your choice of location, either a country or a city and click the button GO to search for trending topics.
 - Under TRENDING IN box, click on one of the trending topics to play a song.
 - If you like to save the song to your playlist, click ADD TO PLAYLIST button.
 - Click NEW SONG to get a new song for the selected trend.
