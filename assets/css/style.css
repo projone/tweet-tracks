@@ -20,14 +20,7 @@ body {
     color: white;
 }
 
-.l-box {
-    padding: 1em;
-}
-
-.mt-1 {
-    margin-top: 1em;
-}
-
+/* header */
 h1 {
     margin: 0;
     font-size: 2.5em;
@@ -48,17 +41,12 @@ h3 {
     background: radial-gradient(circle farthest-side, #292929, #1f1f1f);
 }
 
-.divider {
-    height: 2em;
-    width: 100%;
-    background: linear-gradient(to right, var(--accent1), var(--accent2));
-}
-
 .logo {
     height: 75px;
     width: 75px;
 }
 
+/* section styles */
 section {
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -85,24 +73,7 @@ section {
     padding: 10px;
 }
 
-.animate {
-	background: linear-gradient(to right, var(--accent1), var(--accent2), var(--accent1));
-	background-size: 200% 200%;
-	animation: gradient 3s ease infinite;
-}
-
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
-
+/* lists */
 ol li {
     list-style-position: inside;
 }
@@ -111,6 +82,7 @@ ul li {
     list-style-type: none;
 }
 
+/* trends list */
 .tag-list {
     color: var(--darkBg1);
     font-size: 1.5em;
@@ -127,33 +99,13 @@ ul li {
     cursor: pointer;
 }
 
+/* general utilities */
+.d-none {
+    display: none;
+}
+
 .opacity-0 {
     opacity: 0;
-}
-
-.appear {
-    transition: all ease-in 0.3s;
-}
-
-#expand:hover > .appear {
-    opacity: 100%;
-}
-
-.appear::before {
-    content: "/ ";
-}
-
-footer {
-    background: linear-gradient(to right, var(--accent1), var(--accent2));
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    color: var(--darkBg2)
-}
-
-.arrow:hover {
-    cursor: pointer;
-    color: var(--darkAccent);
 }
 
 .shadow-dark {
@@ -164,6 +116,8 @@ footer {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
+
+/* buttons */
 .btn {
     padding: 10px 20px;
     border-radius: 20px;
@@ -194,10 +148,7 @@ footer {
     color: var(--lightBg2);
 }
 
-.d-none {
-    display: none;
-}
-
+/* links */
 a {
     text-decoration: none;
     color: var(--darkBg2);
@@ -216,6 +167,7 @@ a {
     color: var(--lightBg2)
 }
 
+/* playlist */
 .playlist-item {
     border-bottom: 1px solid var(--lightBg1);
     list-style-type: none;
@@ -236,6 +188,7 @@ a {
     border-radius: 0 0 5px 5px;
 }
 
+/* flex utilities */
 .flex-row {
     display: flex;
     flex-flow: row wrap;
@@ -250,32 +203,8 @@ a {
     align-items: center;
 }
 
-.justify-between {
-    justify-content: space-between;
-}
-
 .justify-center-between {
     justify-content: center;
-}
-
-.m-10 {
-    margin: 10px;
-}
-
-.m-1 {
-    margin: 1em;
-}
-
-.m-5 {
-    margin: 5px;
-}
-
-.ml-1 {
-    margin-left: 1em;
-}
-
-.mb-1 {
-    margin-bottom: 1em;
 }
 
 .justify-center {
@@ -284,24 +213,39 @@ a {
 
 .align-center {
     align-content: center;
+    align-items: center;
 }
 
-.p-10 {
-    padding: 10px;
+/* margin & padding utilities */
+.m-1 {
+    margin: 1em;
 }
 
-.justify-self-end {
-    justify-self: end;
+.m-5 {
+    margin: 0.5em;
 }
 
-.align-self-center {
-    align-self: center;
+.ml-1 {
+    margin-left: 1em;
 }
 
-.justify-self-center {
-    justify-self: center;
+.mt-1 {
+    margin-top: 1em;
 }
 
+.mb-1 {
+    margin-bottom: 1em;
+}
+
+.p-1 {
+    padding: 1em;
+}
+
+.p-5 {
+    padding: 0.5em;
+}
+
+/* loading spinner */
 .loader {
     width: 25px;
     height: 25px;
@@ -312,22 +256,48 @@ a {
     animation: loader 1s linear infinite;
 }
 
+@keyframes loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* iframe sizing */
 iframe {
     width: 100%;
     min-height: 300px;
 }
 
-@keyframes loader {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+/* footer */
+.appear {
+    transition: all ease-in 0.3s;
 }
 
-@media screen and (min-width: 48em) {
+#expand:hover > .appear {
+    opacity: 100%;
+}
+
+.appear::before {
+    content: "/ ";
+}
+
+footer {
+    background: linear-gradient(to right, var(--accent1), var(--accent2));
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    color: var(--darkBg2)
+}
+
+/* MEDIA QUERIES */
+@media screen and (min-width: 64em) {
     .justify-center-between {
         justify-content: space-between;
+    }
+    .mb-1 {
+        margin-bottom: 0;
     }
 }

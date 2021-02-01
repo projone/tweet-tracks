@@ -12,17 +12,7 @@ const COUNTRY = 1;
 var trendsLoaderEl = document.querySelector("#trendsLoader");
 var videoLoaderEl = document.querySelector("#videoLoader");
 var expandBtn = document.querySelector("#expand");
-var arrowBtn = document.querySelector(".arrow");
 
-// // get 'playlist' from localStorage if available 
-// var loadPlaylist = function() {
-//     var data = window.localStorage.getItem('playlist');
-//     if (data){
-//         playList = JSON.parse(data);
-//     } else if (!data) {
-//         playlist = [];
-//     }
-// };
 
 /* GET TRENDS FROM TRENDS24.IN  */
 
@@ -380,22 +370,6 @@ $("#trending").on("click", "a", function(event){
 $("#expand").on("click", function () {
     $(".appear").toggleClass("opacity-0");
 })
-
-// event listener for iframe to toggle gradient animation
-// currently triggered by clicking the section not the iframe
-var iframeEl = document.querySelector("#songs");
-iframeEl.addEventListener("click", function (event) {
-    console.log("clicked video!")
-    var sectionHeaderEl = iframeEl.previousElementSibling;
-    console.log(sectionHeaderEl);
-    sectionHeaderEl.classList.toggle("animate");
-})
-
-// $("iframe").load(function () {
-//     $(this).contents().on("click", function () {
-//         console.log("clicked iframe!")
-//     })
-// })
 
 // event listener for 'add to playlist' button 
 $('#add-to-playlist').on("click", resultToPlaylist);
