@@ -10,7 +10,7 @@ A musical time capsule! Plays a song that has a trending topic of the day from T
 - Webscraped trends24 website to get the trending topics from Twitter.
 - Used Musixmatch API to search for a song that has the trending topic in the lyrics.
 - Utilized Youtube API to play the song
-- saved songs render in a playlist on the page and are saved in localStorage
+- Saved songs render in a playlist on the page and are saved in localStorage
 
 ## How to use
 - Under SELECT YOUR CITY box, select your choice of location, either a country or a city and click the button GO to search for trending topics.
