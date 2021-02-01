@@ -1,5 +1,3 @@
-/* colours not finalized */
-
 * {
     margin: 0;
     padding: 0;
@@ -12,9 +10,6 @@
     --lightBg2: #EBEBEB;
     --accent1: #CAE5FF;
     --accent2: #BDEEC1;
-    /* --darkAccent: #8ebd95; */
-    /* --darkAccent: #ed6a5a; */
-    /* --darkAccent: #d1ac00; */
     --darkAccent:#4584bf;
 }
 
@@ -319,6 +314,7 @@ a {
 
 iframe {
     width: 100%;
+    min-height: 300px;
 }
 
 @keyframes loader {

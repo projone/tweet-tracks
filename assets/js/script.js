@@ -391,6 +391,12 @@ iframeEl.addEventListener("click", function (event) {
     sectionHeaderEl.classList.toggle("animate");
 })
 
+// $("iframe").load(function () {
+//     $(this).contents().on("click", function () {
+//         console.log("clicked iframe!")
+//     })
+// })
+
 // event listener for 'add to playlist' button 
 $('#add-to-playlist').on("click", resultToPlaylist);
 
